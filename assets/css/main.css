@@ -26,37 +26,36 @@
   /* Default color used for the majority of the text content across the entire website */
   --heading-color: black;
   /* Color for headings, subheadings and title throughout the website */
-  --accent-color: #006466;
+  --accent-color: #EF8A17;
   /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
-  --surface-color: #ffffff;
-  /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
-  --contrast-color: #ffffff;
+  --surface-color: var(--offwhite)
+    /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
+    --contrast-color: #ffffff;
   /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
 }
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
-  --nav-color: #a8a9b4;
-  /* The default color of the main navmenu links */
-  --nav-hover-color: #ffffff;
-  /* Applied to main navmenu links when they are hovered over or active */
-  --nav-mobile-background-color: #040b14;
+  --nav-color: var(--offwhite)
+    /* The default color of the main navmenu links */
+    --nav-hover-color: var(--offwhite)
+    /* Applied to main navmenu links when they are hovered over or active */
+    --nav-mobile-background-color: #040b14;
   /* Used as the background color for mobile navigation menu */
-
 }
 
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
 
 .light-background {
-  --background-color: #2726402c;
-  --surface-color: #ffffff;
+  --background-color: rgb(239, 138, 23,.2);
+  --surface-color: var(--offwhite);
 }
 
 .dark-background {
-  --background-color: #151427;
+  --background-color: #8F250C;
   --default-color: #ffffff;
   --heading-color: #ffffff;
-  --surface-color: #151f2b;
+  --surface-color: var(--sienna);
   --contrast-color: #ffffff;
 }
 
@@ -66,7 +65,12 @@
 }
 
 :root {
-  --bright-teal: #006466;
+  --offwhite: #FBF8C5;
+  --grey: #33392D;
+  --offblack: #071013;
+  --sienna: #8F250C;
+  --tangerine: #EF8A17;
+  /* --bright-teal: #006466;
   --mid-teal: #065A60;
   --mid2-teal: #0B525B;
   --dark-teal: #144552;
@@ -79,8 +83,19 @@
   --black: #000000;
   --dark-purp: #312244;
   --mid-purp: #3E1F47;
-  --bright-purp: #4D194D;
+  --bright-purp: #4D194D; */
 }
+
+
+
+
+
+/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+# DATABASE STYLING
+--------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
 
 /*--------------------------------------------------------------
 # General Styling & Shared Classes
@@ -145,6 +160,8 @@ span {
   overflow-y: auto;
   z-index: 997;
   border-right: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1); /* Light shadow */
+
 }
 
 .header .profile-img img {
@@ -501,7 +518,7 @@ section .content-container {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(45deg, rgba(39, 38, 64, 0.9), rgba(20, 69, 82, 0.9));
+  background: linear-gradient(45deg, rgb(143, 37, 12), rgb(143, 37, 12, .75), rgb(143, 37, 12, .5), rgb(239, 138, 23, .5));
   /* Gradient overlay */
   z-index: 2;
   /* Overlay above the image */
@@ -642,7 +659,7 @@ section .content-container {
 
 .tools .topics-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
   grid-auto-rows: minmax(auto, auto);
   padding-bottom: 10px;
@@ -664,13 +681,13 @@ section .content-container {
 
 .tools .tools-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   gap: 10px;
   grid-auto-rows: minmax(auto, auto);
 }
 
 .tools-tile {
-  background-color: var(--deep-indigo-trans2);
+  background-color: rgb(143, 37, 12, .4);
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   height: 80px;
@@ -761,8 +778,9 @@ section .content-container {
 .contact-container {
   padding-top: 40px;
   font-size: smaller;
-text-align: center;
+  text-align: center;
 }
+
 .contact-container em {
   color: var(--nav-color)
 }
@@ -1012,19 +1030,25 @@ text-align: center;
 --------------------------------------------------------------*/
 
 .pubs-list .tile-link {
-  display: inline-flex; /* Ensures the text and icon are inline and aligned properly */
-  align-items: center; /* Vertically centers the icon and text */
-  gap: 4px; /* Adds spacing between text and icon */
+  display: inline-flex;
+  /* Ensures the text and icon are inline and aligned properly */
+  align-items: center;
+  /* Vertically centers the icon and text */
+  gap: 4px;
+  /* Adds spacing between text and icon */
   text-decoration: none;
   font-size: 0.5rem;
   font-weight: 500;
   color: #17a2b8;
   border: 1px solid #17a2b8;
-  padding: 4px 8px; /* Ensures enough space inside the button */
+  padding: 4px 8px;
+  /* Ensures enough space inside the button */
   border-radius: 4px;
   transition: background-color 0.3s ease, color 0.3s ease;
-  margin-left: 5px; /* Adds spacing between the paragraph text and the button */
-  white-space: nowrap; /* Prevents wrapping for the text and icon */
+  margin-left: 5px;
+  /* Adds spacing between the paragraph text and the button */
+  white-space: nowrap;
+  /* Prevents wrapping for the text and icon */
 }
 
 .pubs-list .tile-link:hover {
@@ -1033,22 +1057,31 @@ text-align: center;
 }
 
 .pubs-list .tile-link i {
-  font-size: 0.6rem; /* Adjust icon size */
+  font-size: 0.6rem;
+  /* Adjust icon size */
 }
+
 .pubs-list p {
-  margin: 0; /* Reset default margin */
-  padding-left: 20px; /* Creates space for the hanging indent */
-  text-indent: -20px; /* Negative value aligns the first line to the left */
-  font-size: smaller; /* Optional: Adjust font size */
-  line-height: 1.5; /* Optional: Adjust line spacing */
+  margin: 0;
+  /* Reset default margin */
+  padding-left: 20px;
+  /* Creates space for the hanging indent */
+  text-indent: -20px;
+  /* Negative value aligns the first line to the left */
+  font-size: smaller;
+  /* Optional: Adjust font size */
+  line-height: 1.5;
+  /* Optional: Adjust line spacing */
   position: relative;
 }
 
 .pubs-list p a {
-  display: inline-block; /* Ensures the link stays inline */
-  margin-left: 10px; /* Adds space between text and the link */
-  text-indent: 0; /* Prevents hanging indent from affecting the link */
-  vertical-align: middle; /* Aligns the link with the text */
+  display: inline-block;
+  /* Ensures the link stays inline */
+  margin-left: 10px;
+  /* Adds space between text and the link */
+  text-indent: 0;
+  /* Prevents hanging indent from affecting the link */
+  vertical-align: middle;
+  /* Aligns the link with the text */
 }
-
-
