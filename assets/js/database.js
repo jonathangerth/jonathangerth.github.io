@@ -10,10 +10,14 @@ document.addEventListener("DOMContentLoaded", function () {
   async function loadDatabase() {
     const response = await fetch("assets/database.csv");
     const text = await response.text();
-    const rows = text.split("\n").slice(1).filter(row => row.trim() !== ""); // Remove empty lines
+    const rows = text
+      .split("\n")
+      .slice(1)
+      .filter((row) => row.trim() !== ""); // Remove empty lines
 
-    database = rows.map(row => {
-        const columns = row.split(",").map(col => col ? col.trim() : ""); // Trim & Handle Undefined
+    database = rows
+      .map((row) => {
+        const columns = row.split(",").map((col) => (col ? col.trim() : "")); // Trim & Handle Undefined
 
         if (columns.length < 6) return null; // Skip incomplete rows
 
@@ -27,11 +31,11 @@ document.addEventListener("DOMContentLoaded", function () {
         };
       })
       .filter((item) => item !== null);
-      
-      console.log("Database loaded:", database); // Debugging Output
 
-      generateFilters(); // ✅ Call after data is loaded
-      displayCards(); // ✅ Call after data is loaded
+    console.log("Database loaded:", database); // Debugging Output
+
+    generateFilters(); // ✅ Call after data is loaded
+    displayCards(); // ✅ Call after data is loaded
   }
 
   // Generate Filters Dynamically
@@ -110,17 +114,18 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     filteredData.forEach((item) => {
-      let card = document.createElement("div");
+      let card = document.createElement("a"); // Make the whole card a link
+      card.href = item.doi_link;
+      card.target = "_blank"; // Opens in a new tab
       card.className = "database-card";
       card.innerHTML = `
+            <div class="card-content">
                 <p><strong>Citation:</strong> ${item.citation}</p>
-                                <p><strong>Title:</strong> ${item.title}</p>
-
                 <p><strong>Participant Type:</strong> ${item.participant_cat}</p>
                 <p><strong>Medical Categorization:</strong> ${item.medical_cat}</p>
                 <p><strong>Outcome Category:</strong> ${item.outcome_cat}</p>
-                <a href="${item.doi_link}" target="_blank" class="doi-link">View DOI</a>
-            `;
+            </div>
+        `;
       container.appendChild(card);
     });
   }

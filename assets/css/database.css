@@ -1,0 +1,249 @@
+
+  
+  /*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+  # DATABASE STYLING
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+  @media (max-width: 1199px) {
+    .header {
+        left: -100%; /* Initially hidden */
+    }
+    .header-show {
+        left: 0; /* Show when toggled */
+    }
+    body.menu-open main {
+        margin-left: 300px; /* Push content when menu is open */
+    }
+  }
+  
+  
+  @media (min-width: 1200px) {
+    body.database-page main {
+        margin-left: 300px; /* Adjust main content position */
+    }
+  }
+  
+  .database-hero {
+    width: 100%;
+    min-height: 20vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    /* Ensures the pseudo-element doesn't spill out */
+  }
+  
+  .database-hero .container {
+    position: relative;
+    z-index: 3;
+    /* Ensure content is on top of the overlay */
+    color: #ffffff;
+    /* Optional: Ensure text is readable */
+    display: flex;
+    flex-wrap: wrap;
+    /* Allow items to wrap on smaller screens */
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    /* Add spacing between elements */
+    text-align: center;
+    flex: 1;
+    /* Allow the text to take up the remaining space */
+    text-align: left;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 20px;
+    background-color: #f8f9fa;
+  }
+  
+  /* Filters Section */
+  .filters {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .filter-group {
+    margin-bottom: 15px;
+  }
+  
+  .filter-group h3 {
+    margin-bottom: 5px;
+  }
+  
+  .filter-group label {
+    display: block;
+    margin-bottom: 3px;
+  }
+  
+  /* Database Cards */
+  .database-container {
+    background: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .database-card {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    width: calc(33.333% - 10px);
+    min-width: 250px;
+    text-align: left;
+  }
+  
+  .database-card p {
+    margin: 5px 0;
+  }
+  
+  .doi-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .doi-link:hover {
+    text-decoration: underline;
+  }
+  .filters {
+    background: var(--background-color);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 250px;
+}
+
+.filter-group h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* Modern Checkboxes */
+.filter-group label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    gap: 8px;
+}
+
+.filter-group input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--accent-color);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.filter-group input[type="checkbox"]:checked {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.filter-group input[type="checkbox"]::after {
+    content: "✔";
+    font-size: 12px;
+    color: white;
+    display: none;
+}
+
+.filter-group input[type="checkbox"]:checked::after {
+    display: block;
+}
+/* Ensure content isn't covered by sidebar */
+@media (min-width: 1200px) {
+    body.database-page main {
+        margin-left: 300px;
+        padding: 20px;
+    }
+}
+
+/* Adjust Cards for Smaller Screens */
+@media (max-width: 768px) {
+    .cards-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .database-card {
+        width: 90%;
+    }
+
+    .filters {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+}
+
+.database-card {
+    display: block; /* Makes the <a> tag behave like a block element */
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    width: calc(33.333% - 20px);
+    min-width: 250px;
+    max-width: 400px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    text-decoration: none; /* Removes underline from links */
+    color: inherit; /* Keeps text colors normal */
+}
+
+/* Card Hover Effect */
+.database-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    background-color: rgba(239, 138, 23, 0.1); /* Light highlight effect */
+}
+
+/* Ensure internal text remains readable */
+.database-card p {
+    margin: 5px 0;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* Ensure it doesn't look like a regular link */
+.database-card:hover p {
+    text-decoration: none;
+}
+
+/* Ensures entire card is clickable but maintains padding */
+.database-card .card-content {
+    cursor: pointer;
+    padding: 10px;
+}
