@@ -22,13 +22,13 @@ document.addEventListener("DOMContentLoaded", function () {
         if (columns.length < 6) return null; // Skip incomplete rows
 
         return {
-          date: columns[0],
-          author_ab: columns[1],
+          year: columns[0],
+          authors: columns[1],
           title: columns[2],
           participant_cat: columns[3],
           medical_cat: columns[4],
           outcome_cat: columns[5],
-          doi_link: columns[6],
+          doi_link: columns[6]
         };
       })
       .filter((item) => item !== null);
@@ -124,7 +124,8 @@ document.addEventListener("DOMContentLoaded", function () {
       card.className = "database-card";
       card.innerHTML = `
             <div class="card-content">
-                <p><strong>Citation:</strong> ${item.citation}</p>
+                <p><strong>Year:</strong> ${item.year}</p>
+                <p><strong>Author:</strong> ${item.authors}</p>
                 <p><strong>Title:</strong> ${item.title}</p>
                 <p><strong>Participant Type:</strong> ${item.participant_cat}</p>
                 <p><strong>Medical Categorization:</strong> ${item.medical_cat}</p>
