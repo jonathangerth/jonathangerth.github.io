@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
           participant_cat: columns[3],
           medical_cat: columns[4],
           outcome_cat: columns[5],
-          doi_link: columns[6]
+          doi_link: columns[6],
         };
       })
       .filter((item) => item !== null);
@@ -43,52 +43,56 @@ document.addEventListener("DOMContentLoaded", function () {
   function generateFilters() {
     const categories = ["participant_cat", "medical_cat", "outcome_cat"];
 
-    categories.forEach(category => {
-        let container = document.getElementById(`${category}-filters`);
-        if (!container) {
-            console.error(`Filter container not found: #${category}-filters`);
-            return;
+    categories.forEach((category) => {
+      let container = document.getElementById(`${category}-filters`);
+      if (!container) {
+        console.error(`Filter container not found: #${category}-filters`);
+        return;
+      }
+
+      // Collect all unique filter options
+      let uniqueValues = new Set();
+
+      database.forEach((item) => {
+        if (item[category]) {
+          // Split multiple values by semicolon, trim whitespace
+          item[category]
+            .split(";")
+            .map((value) => value.trim())
+            .forEach((value) => {
+              uniqueValues.add(value);
+            });
         }
+      });
 
-        // Collect all unique filter options
-        let uniqueValues = new Set();
+      let sortedValues = [...uniqueValues].sort();
+      console.log(`Filter values for ${category}:`, sortedValues); // Debugging
 
-        database.forEach(item => {
-            if (item[category]) {
-                // Split multiple values by semicolon, trim whitespace
-                item[category].split(";").map(value => value.trim()).forEach(value => {
-                    uniqueValues.add(value);
-                });
-            }
-        });
+      // Ensure we have values to display
+      if (sortedValues.length === 0) {
+        container.innerHTML = "<p>No options available.</p>";
+        return;
+      }
 
-        let sortedValues = [...uniqueValues].sort();
-        console.log(`Filter values for ${category}:`, sortedValues); // Debugging
+      // Generate checkboxes dynamically
+      sortedValues.forEach((value) => {
+        let checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.value = value;
+        checkbox.id = `${category}-${value.replace(/\s+/g, "-").toLowerCase()}`;
+        checkbox.addEventListener("change", () =>
+          updateFilters(category, value)
+        );
 
-        // Ensure we have values to display
-        if (sortedValues.length === 0) {
-            container.innerHTML = "<p>No options available.</p>";
-            return;
-        }
+        let label = document.createElement("label");
+        label.htmlFor = checkbox.id;
+        label.appendChild(checkbox);
+        label.append(` ${value}`);
 
-        // Generate checkboxes dynamically
-        sortedValues.forEach(value => {
-            let checkbox = document.createElement("input");
-            checkbox.type = "checkbox";
-            checkbox.value = value;
-            checkbox.id = `${category}-${value.replace(/\s+/g, "-").toLowerCase()}`;
-            checkbox.addEventListener("change", () => updateFilters(category, value));
-
-            let label = document.createElement("label");
-            label.htmlFor = checkbox.id;
-            label.appendChild(checkbox);
-            label.append(` ${value}`);
-
-            container.appendChild(label);
-        });
+        container.appendChild(label);
+      });
     });
-}
-
+  }
 
   // Update Filter Values & Refresh Cards
   function updateFilters(category, value) {
@@ -118,11 +122,19 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     filteredData.forEach((item) => {
-      let card = document.createElement("a"); // Make the whole card a link
-      card.href = item.doi_link;
-      card.target = "_blank"; // Opens in a new tab
-      card.className = "database-card";
-      card.innerHTML = `
+        let doiURL = item.doi_link.trim();
+        
+        // Ensure link starts with "http://" or "https://", otherwise add "https://"
+        if (!/^https?:\/\//.test(doiURL)) {
+            doiURL = "https://" + doiURL;
+        }
+    
+        let card = document.createElement("a"); // Make the whole card a link
+        card.href = doiURL;
+        card.target = "_blank"; // Opens in a new tab
+        card.rel = "noopener noreferrer"; // Security fix for opening new tabs
+        card.className = "database-card";
+        card.innerHTML = `
             <div class="card-content">
                 <p><strong>Year:</strong> ${item.year}</p>
                 <p><strong>Author:</strong> ${item.authors}</p>
@@ -132,8 +144,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 <p><strong>Outcome Category:</strong> ${item.outcome_cat}</p>
             </div>
         `;
-      container.appendChild(card);
-    });
+        container.appendChild(card);
+    });    
+    
   }
 
   // Initialize
