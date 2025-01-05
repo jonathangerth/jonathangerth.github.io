@@ -22,12 +22,13 @@ document.addEventListener("DOMContentLoaded", function () {
         if (columns.length < 6) return null; // Skip incomplete rows
 
         return {
-          citation: columns[0],
-          title: columns[1],
-          participant_cat: columns[2],
-          medical_cat: columns[3],
-          outcome_cat: columns[4],
-          doi_link: columns[5],
+          date: columns[0],
+          author_ab: columns[1],
+          title: columns[2],
+          participant_cat: columns[3],
+          medical_cat: columns[4],
+          outcome_cat: columns[5],
+          doi_link: columns[6],
         };
       })
       .filter((item) => item !== null);
@@ -42,49 +43,52 @@ document.addEventListener("DOMContentLoaded", function () {
   function generateFilters() {
     const categories = ["participant_cat", "medical_cat", "outcome_cat"];
 
-    categories.forEach((category) => {
-      let container = document.getElementById(`${category}-filters`);
+    categories.forEach(category => {
+        let container = document.getElementById(`${category}-filters`);
+        if (!container) {
+            console.error(`Filter container not found: #${category}-filters`);
+            return;
+        }
 
-      // Check if container exists
-      if (!container) {
-        console.error(`Filter container not found: #${category}-filters`);
-        return;
-      }
+        // Collect all unique filter options
+        let uniqueValues = new Set();
 
-      // Extract unique filter values
-      let uniqueValues = [
-        ...new Set(
-          database.map((item) => item[category]?.trim()).filter(Boolean)
-        ),
-      ].sort();
+        database.forEach(item => {
+            if (item[category]) {
+                // Split multiple values by semicolon, trim whitespace
+                item[category].split(";").map(value => value.trim()).forEach(value => {
+                    uniqueValues.add(value);
+                });
+            }
+        });
 
-      console.log(`Filter values for ${category}:`, uniqueValues); // Debugging output
+        let sortedValues = [...uniqueValues].sort();
+        console.log(`Filter values for ${category}:`, sortedValues); // Debugging
 
-      // Ensure we have values to display
-      if (uniqueValues.length === 0) {
-        container.innerHTML = "<p>No options available.</p>"; // Show message if empty
-        return;
-      }
+        // Ensure we have values to display
+        if (sortedValues.length === 0) {
+            container.innerHTML = "<p>No options available.</p>";
+            return;
+        }
 
-      // Generate checkboxes dynamically
-      uniqueValues.forEach((value) => {
-        let checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.value = value;
-        checkbox.id = `${category}-${value.replace(/\s+/g, "-").toLowerCase()}`;
-        checkbox.addEventListener("change", () =>
-          updateFilters(category, value)
-        );
+        // Generate checkboxes dynamically
+        sortedValues.forEach(value => {
+            let checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.value = value;
+            checkbox.id = `${category}-${value.replace(/\s+/g, "-").toLowerCase()}`;
+            checkbox.addEventListener("change", () => updateFilters(category, value));
 
-        let label = document.createElement("label");
-        label.htmlFor = checkbox.id;
-        label.appendChild(checkbox);
-        label.append(` ${value}`);
+            let label = document.createElement("label");
+            label.htmlFor = checkbox.id;
+            label.appendChild(checkbox);
+            label.append(` ${value}`);
 
-        container.appendChild(label);
-      });
+            container.appendChild(label);
+        });
     });
-  }
+}
+
 
   // Update Filter Values & Refresh Cards
   function updateFilters(category, value) {
@@ -121,6 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
       card.innerHTML = `
             <div class="card-content">
                 <p><strong>Citation:</strong> ${item.citation}</p>
+                <p><strong>Title:</strong> ${item.title}</p>
                 <p><strong>Participant Type:</strong> ${item.participant_cat}</p>
                 <p><strong>Medical Categorization:</strong> ${item.medical_cat}</p>
                 <p><strong>Outcome Category:</strong> ${item.outcome_cat}</p>
