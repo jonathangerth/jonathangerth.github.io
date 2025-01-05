@@ -27,53 +27,56 @@
     <!-- Main CSS File -->
     <link href="assets/css/main.css" rel="stylesheet">
 
-    <!-- Database script -->
-     <link href="database.js" rel="script">
 
 </head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GB97RX1FGH"></script>
 <script>
+
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
 
     gtag('config', 'G-GB97RX1FGH');
 </script>
-<body>
-<header id="header" class="header dark-background d-flex flex-column">
-    <i class="header-toggle d-xl-none bi bi-list"></i>
 
-    <div class="profile-img">
-        <img src="assets/img/profile_headshot.png" alt="" class="img-fluid rounded-circle">
-    </div>
+<body class="database-page">
+    <main class="main">
+    <!--HAMBURGER MENU-->
+    <header id="header" class="header dark-background d-flex flex-column">
+        <i class="header-toggle d-xl-none bi bi-list"></i>
 
-    <a href="index.html" class="logo d-flex align-items-center justify-content-center">
-        <h1 class="sitename">Jonathan Gerth</h1>
-    </a>
+        <div class="profile-img">
+            <img src="assets/img/profile_headshot.png" alt="" class="img-fluid rounded-circle">
+        </div>
 
-    <!-- REPLACE UNDERSCORES WITH LINKS TO SOCIALS; DELETE ANY N/A -->
-    <div class="social-links text-center">
-        <a href="_____________" class="social-button">
-            <img src="assets/img/icons/icon_bluesky.png" alt="BlueSky Icon" class="social-icon">
+        <a href="index.html" class="logo d-flex align-items-center justify-content-center">
+            <h1 class="sitename">Jonathan Gerth</h1>
         </a>
-        <a href="_____________" class="social-button">
-            <img src="assets/img/icons/icon_linkedin.png" alt="LinkedIn Icon" class="social-icon">
-        </a>
-        <a href="_____________" class="social-button">
-            <img src="assets/img/icons/icon_twitter.png" alt="Twitter Icon" class="social-icon">
-        </a>
-    </div>
 
-    <body class="database-page">
+        <!-- REPLACE UNDERSCORES WITH LINKS TO SOCIALS; DELETE ANY N/A -->
+        <div class="social-links text-center">
+            <a href="_____________" class="social-button">
+                <img src="assets/img/icons/icon_bluesky.png" alt="BlueSky Icon" class="social-icon">
+            </a>
+            <a href="_____________" class="social-button">
+                <img src="assets/img/icons/icon_linkedin.png" alt="LinkedIn Icon" class="social-icon">
+            </a>
+            <a href="_____________" class="social-button">
+                <img src="assets/img/icons/icon_twitter.png" alt="Twitter Icon" class="social-icon">
+            </a>
+        </div>
 
         <!-- NAVIGATION MENU-->
         <nav id="navmenu" class="navmenu">
             <ul>
-                <li><a href="#about"><i class="bi bi-person-lines-fill navicon"></i>About My Work</a></li>
-                <li><a href="#publications"><i class="bi bi-file-earmark-text navicon"></i> Publications</a></li>
-                <li><a href="#presentations"><i class="bi bi-file-easel navicon"></i> Presentations</a></li>
-                <li><a href="#projects"><i class="bi bi-signpost-2 navicon"></i> Professional Experience</a></li>
+                <li><a href="index.html#about"><i class="bi bi-person-lines-fill navicon"></i>About My Work</a></li>
+                <li><a href="index.html#publications"><i class="bi bi-file-earmark-text navicon"></i>
+                        Publications</a></li>
+                <li><a href="index.html#presentations"><i class="bi bi-file-easel navicon"></i> Presentations</a>
+                </li>
+                <li><a href="index.html#projects"><i class="bi bi-signpost-2 navicon"></i> Professional
+                        Experience</a></li>
                 <li><a href="database.html"><i class="bi bi-file-earmark-spreadsheet navicon"></i>Literature
                         Database</a></li>
                 <!-- <li><a href="#cv" class="active"><i class="bi bi-blockquote-left navicon"></i>Curriculum Vitae</a></li> -->
@@ -90,7 +93,47 @@
             </p>
         </div>
 
-</header>
+    </header>
+
+    <!--HERO HEADER SECTION-->
+    <section id="hero" class="database-hero section dark-background">
+        <div class="container">
+            <h2>Medical Specialty Camp Literature Database</h2>
+        </div>
+    </section>
+
+    <!-- FILTERS SECTION -->
+    <section class="filters">
+        <h2>Filters</h2>
+
+        <!-- Participant Type Filter -->
+        <div class="filter-group">
+            <h3>Participant Type</h3>
+            <div id="participant_cat-filters"></div>
+        </div>
+
+        <!-- Medical Categorization Filter -->
+        <div class="filter-group">
+            <h3>Medical Categorization</h3>
+            <div id="medical_cat-filters"></div>
+        </div>
+
+        <!-- Outcome Category Filter -->
+        <div class="filter-group">
+            <h3>Outcome Category</h3>
+            <div id="outcome_cat-filters"></div>
+        </div>
+    </section>
+
+    <!-- DATABASE CARDS TABLE -->
+    <section class="database-container">
+        <h2>Database Entries</h2>
+        <div id="database-cards" class="cards-container"></div>
+    </section>
+
+    <script src="assets/js/database.js"></script>
+</main>
+
 </body>
 
 </html>
