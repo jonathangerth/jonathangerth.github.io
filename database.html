@@ -93,9 +93,9 @@
         </section>
 
         <!-- FILTERS SECTION CONTAINER -->
-        <section class="filters-container">
+        <section class="filters-section">
             <!-- Filters Section -->
-            <section class="filters filters-section">
+            <section class="filters">
                 <!-- Participant Type Filter -->
                 <div class="filter-group">
                     <h3>Focus</h3>
@@ -114,15 +114,18 @@
                     <div id="outcome_cat-filters" class="filter-options"></div>
                 </div>
             </section>
-
+            <div class="reset-container">
+                <button id="reset-filters" class="reset-button">Reset Filters</button>
+            </div>
             <!-- Reset Button Positioned Below Filters -->
-            <button id="reset-filters" class="reset-button">Reset Filters</button>
         </section>
 
 
         <!-- DATABASE CARDS TABLE -->
         <section class="database-container">
-            <h2>Articles</h2>
+            <div class="articles-header">
+                <h2>Articles</h2>
+            </div>
             <div id="database-cards" class="cards-container"></div>
         </section>
 

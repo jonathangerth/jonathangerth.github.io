@@ -104,36 +104,29 @@ body {
 
 /* Filters Section - Single Row Layout */
 /* New container for both filters and reset button */
-.filters-container {
-  position: sticky;
-  top: 0; /* Stick to the top of the viewport */
-  z-index: 1000; /* Ensure it stays above other content */
-  background-color: var(--background-color); /* Prevents overlap */
-  padding: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds shadow for visibility */
-}
 
 .filters-section {
   position: sticky;
-  top: 0; /* Sticks to the very top */
-  z-index: 1000; /* Ensures it stays above other content */
-  background-color: var(--background-color); /* Prevents overlap with other elements */
-  padding: 10px; /* Maintain spacing */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds shadow for visibility */
+  top: 0;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.4); /* Semi-transparent white */
+  backdrop-filter: blur(8px); /* Adds a slight blur effect */
+  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Keeps filters readable */
 }
 
 .filters {
   display: flex;
-  flex-wrap: wrap; /* Allow wrapping on small screens */
+  flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
   padding: 15px;
-  background-color: var(--timberwolf);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: rgba(211, 208, 203, 1); /* Timberwolf with transparency */
   border-radius: 8px;
   width: 100%;
   gap: 20px;
 }
+
 
 /* Each filter group */
 .filter-group {
@@ -144,7 +137,7 @@ body {
 /* Filter Headings */
 .filter-group h3 {
   font-size: 16px;
-  font-weight: normal;
+  font-weight: 600;
   margin-bottom: 8px;
   text-align: center;
 }
@@ -158,19 +151,27 @@ body {
   padding: 5px;
   border: 1px solid var(--grey);
   border-radius: 5px;
-  background: white;
+  background: rgb(256,256,256,.8)
 }
 
 /* Reduce spacing between checkboxes */
 .filter-options label {
   display: flex;
   align-items: center;
-  font-size: 10px; /* Smaller text */
-  /* font: "Helvetica Neue"; */
+  font-size: 14px;
+  color: var(--grey); /* Default text color */
   cursor: pointer;
-  padding: 2px 3px; /* Reduce vertical padding */
-  line-height: 1; /* Reduce vertical space */
+  gap: 6px;
+  transition: color 0.3s ease-in-out; /* Smooth transition */
 }
+
+.filter-options .filter-count {
+  font-weight: 300; /* Lighter weight */
+  color: var(--grey); /* Slightly dimmer */
+  font-size: 0.9em; /* Slightly smaller */
+  transition: color 0.3s ease-in-out; /* Smooth transition */
+}
+
 
 /* Adjust Checkbox Size */
 .filter-options input[type="checkbox"] {
@@ -180,11 +181,23 @@ body {
   appearance: none;
   border: 0.5px solid var(--grey); /* Sienna border */
   border-radius: 3px; /* Slightly rounded corners */
-  background-color: var(--timberwolf); /* Light Timberwolf background */
+  background-color: var(--timberwolf) 50%;
   cursor: pointer;
   display: inline-block;
   position: relative;
   transition: all 0.2s ease-in-out;
+}
+
+/* When Checkbox is Checked: Change Text & Count Color */
+.filter-options input[type="checkbox"]:checked + span {
+  color: var(--sienna); /* Change text color */
+  font-weight: 600; /* Make it bold */
+}
+
+/* When Checkbox is Checked: Change Count Color */
+.filter-options input[type="checkbox"]:checked + span + .filter-count {
+  color: var(--sienna); /* Change count color */
+  font-weight: 600; /* Make it bold */
 }
 
 /* Checked State */
@@ -247,16 +260,48 @@ body {
   }
 }
 
+.reset-button {
+  background-color: var(--sienna);
+  color: white;
+  border: 2px solid var(--sienna);
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  margin-top: 10px;
+}
+
+.reset-button:hover {
+  background-color: color-mix(in srgb, var(--sienna) 80%, var(--timberwolf) 20%);
+  border-color: var(--sienna);
+  color: white;
+}
+
+.reset-button:focus {
+  outline: 2px solid var(--sienna);
+  outline-offset: 2px;
+}
+
+
 /*-------------------------------------------------------------------
   # DATABASE CONTAINER & CARDS
 -------------------------------------------------------------------*/
 
 .database-container {
   background: var(--background-color);
-  padding: 20px;
+  padding: 10px;
   border-radius: 8px;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  /* text-align: center; */
+}
+
+.articles-header {
+/* align-content: center; */
+text-align: center;
+padding-bottom: 10px;
 }
 
 /* Cards Layout */
@@ -273,7 +318,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   background: #ffffff;
-  padding: 20px;
+  padding: 10px;
   border-radius: 8px;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
   border: 0.5px solid var(--grey);
@@ -416,29 +461,4 @@ body {
   .filter-group {
       width: 100%;
   }
-}
-
-
-.reset-button {
-  background-color: var(--sienna);
-  color: white;
-  border: 2px solid var(--sienna);
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  margin-top: 10px;
-}
-
-.reset-button:hover {
-  background-color: color-mix(in srgb, var(--sienna) 80%, var(--timberwolf) 20%);
-  border-color: var(--sienna);
-  color: white;
-}
-
-.reset-button:focus {
-  outline: 2px solid var(--sienna);
-  outline-offset: 2px;
 }
