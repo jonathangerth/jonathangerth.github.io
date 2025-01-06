@@ -1,249 +1,305 @@
-
-  
-  /*----------------------------------------------------------------------------------------------------------------------------------------------------------------
-  # DATABASE STYLING
-  --------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-  @media (max-width: 1199px) {
-    .header {
-        left: -100%; /* Initially hidden */
-    }
-    .header-show {
-        left: 0; /* Show when toggled */
-    }
-    body.menu-open main {
-        margin-left: 300px; /* Push content when menu is open */
-    }
-  }
-  
-  
-  @media (min-width: 1200px) {
-    body.database-page main {
-        margin-left: 300px; /* Adjust main content position */
-    }
-  }
-  
-  .database-hero {
-    width: 100%;
-    min-height: 20vh;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    /* Ensures the pseudo-element doesn't spill out */
-  }
-  
-  .database-hero .container {
-    position: relative;
-    z-index: 3;
-    /* Ensure content is on top of the overlay */
-    color: #ffffff;
-    /* Optional: Ensure text is readable */
-    display: flex;
-    flex-wrap: wrap;
-    /* Allow items to wrap on smaller screens */
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    /* Add spacing between elements */
-    text-align: center;
-    flex: 1;
-    /* Allow the text to take up the remaining space */
-    text-align: left;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    padding: 20px;
-    background-color: #f8f9fa;
-  }
-  
-  /* Filters Section */
-  .filters {
-    background: #fff;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .filter-group {
-    margin-bottom: 15px;
-  }
-  
-  .filter-group h3 {
-    margin-bottom: 5px;
-  }
-  
-  .filter-group label {
-    display: block;
-    margin-bottom: 3px;
-  }
-  
-  /* Database Cards */
-  .database-container {
-    background: #fff;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .cards-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-  }
-  
-  .database-card {
-    background: #ffffff;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    width: calc(33.333% - 10px);
-    min-width: 250px;
-    text-align: left;
-  }
-  
-  .database-card p {
-    margin: 5px 0;
-  }
-  
-  .doi-link {
-    display: inline-block;
-    margin-top: 10px;
-    color: #007BFF;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  .doi-link:hover {
-    text-decoration: underline;
-  }
-  .filters {
-    background: var(--background-color);
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: space-between;
+:root {
+  --background-color: #ffffff;
+  --default-color: black;
+  --heading-color: black;
+  --accent-color: #EF8A17;
+  --surface-color: #FBF8C5;
+  --contrast-color: #ffffff;
+  --nav-color: #FBF8C5;
+  --nav-hover-color: #FBF8C5;
+  --nav-mobile-background-color: #040b14;
+  --offwhite: #FBF8C5;
+  --grey: #33392D;
+  --offblack: #071013;
+  --sienna: #8F250C;
+  --tangerine: #EF8A17;
 }
 
-.filter-group {
-    flex: 1;
-    min-width: 250px;
+/* Smooth scroll */
+:root {
+  scroll-behavior: smooth;
 }
 
-.filter-group h3 {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 10px;
+/* Light and Dark Theme Adjustments */
+.light-background {
+  --background-color: rgba(239, 138, 23, 0.2);
+  --surface-color: var(--offwhite);
 }
 
-/* Modern Checkboxes */
-.filter-group label {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    gap: 8px;
+.dark-background {
+  --background-color: #8F250C;
+  --default-color: #ffffff;
+  --heading-color: #ffffff;
+  --surface-color: var(--sienna);
+  --contrast-color: #ffffff;
 }
 
-.filter-group input[type="checkbox"] {
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--accent-color);
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
+/*-------------------------------------------------------------------
+  # GENERAL STYLES
+-------------------------------------------------------------------*/
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  padding: 20px;
+  background-color: var(--background-color);
 }
 
-.filter-group input[type="checkbox"]:checked {
-    background-color: var(--accent-color);
-    border-color: var(--accent-color);
-}
-
-.filter-group input[type="checkbox"]::after {
-    content: "✔";
-    font-size: 12px;
-    color: white;
-    display: none;
-}
-
-.filter-group input[type="checkbox"]:checked::after {
-    display: block;
-}
 /* Ensure content isn't covered by sidebar */
 @media (min-width: 1200px) {
-    body.database-page main {
-        margin-left: 300px;
-        padding: 20px;
-    }
+  body.database-page main {
+      margin-left: 300px;
+      padding: 20px;
+  }
 }
 
-/* Adjust Cards for Smaller Screens */
+/*-------------------------------------------------------------------
+  # DATABASE PAGE STYLES
+-------------------------------------------------------------------*/
+
+/* HERO SECTION */
+.database-hero {
+  width: 100%;
+  min-height: 20vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.database-hero .container {
+  position: relative;
+  z-index: 3;
+  color: #ffffff;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+}
+
+/*-------------------------------------------------------------------
+  # FILTERS SECTION - COMPACT LAYOUT
+-------------------------------------------------------------------*/
+
+/* Filters Section - Single Row Layout */
+.filters {
+  display: flex;
+  flex-wrap: nowrap; /* Prevent filters from stacking */
+  justify-content: space-between;
+  align-items: flex-start;
+  background: var(--background-color);
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+  gap: 10px;
+}
+
+/* Each filter group takes equal space */
+.filter-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Compact heading for filters */
+.filter-group h3 {
+  font-size: 14px;
+  font-weight: normal; /* Remove emphasis */
+  margin-bottom: 3px;
+  text-align: left;
+}
+
+/* Scrollable Checkbox List */
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  max-height: 150px; /* Keep filters compact */
+  overflow-y: auto; /* Enable scrolling */
+  padding: 5px;
+  border: 1px solid var(--grey);
+  border-radius: 5px;
+  background: var(--surface-color);
+}
+
+/* Reduce spacing between checkboxes */
+.filter-options label {
+  display: flex;
+  align-items: center;
+  font-size: 12px; /* Smaller text */
+  cursor: pointer;
+  padding: 2px 3px; /* Reduce vertical padding */
+  line-height: 1; /* Reduce vertical space */
+}
+
+/* Adjust Checkbox Size */
+.filter-options input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  margin-right: 4px; /* Slightly closer to text */
+}
+
+/* RESPONSIVE: Stack filters on smaller screens */
 @media (max-width: 768px) {
-    .cards-container {
-        flex-direction: column;
-        align-items: center;
-    }
+  .filters {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+  }
 
-    .database-card {
-        width: 90%;
-    }
-
-    .filters {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .filter-group {
-        width: 100%;
-    }
+  .filter-group {
+      width: 100%; /* Filters take full width on small screens */
+  }
 }
 
+/*-------------------------------------------------------------------
+  # DATABASE CONTAINER & CARDS
+-------------------------------------------------------------------*/
+
+.database-container {
+  background: var(--background-color);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Cards Layout */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+/* DATABASE CARD DESIGN */
 .database-card {
-    display: block; /* Makes the <a> tag behave like a block element */
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
-    width: calc(33.333% - 20px);
-    min-width: 250px;
-    max-width: 400px;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    text-decoration: none; /* Removes underline from links */
-    color: inherit; /* Keeps text colors normal */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+  width: calc(33.333% - 20px);
+  min-width: 250px;
+  max-width: 400px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  position: relative;
 }
 
-/* Card Hover Effect */
+/* HOVER EFFECT */
 .database-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
-    background-color: rgba(239, 138, 23, 0.1); /* Light highlight effect */
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+  background-color: rgba(239, 138, 23, 0.1);
 }
 
-/* Ensure internal text remains readable */
-.database-card p {
-    margin: 5px 0;
-    font-size: 14px;
-    line-height: 1.4;
+/* DOI FLAG (Access Paper) */
+.doi-flag {
+  position: absolute;
+  top: 15px; /* Moved down slightly */
+  right: 10px;
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: bold;
+  border-radius: 4px;
+  text-transform: uppercase;
 }
 
-/* Ensure it doesn't look like a regular link */
-.database-card:hover p {
-    text-decoration: none;
+/* Author & Year (No Bold) */
+.authors-year {
+  font-size: 13px;
+  font-weight: normal; /* Removed bold */
+  color: var(--grey);
+  margin-bottom: 5px;
 }
 
-/* Ensures entire card is clickable but maintains padding */
-.database-card .card-content {
-    cursor: pointer;
-    padding: 10px;
+/* Centered & Styled Title */
+.card-title {
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  margin: 10px 0;
+  color: var(--offblack);
+}
+
+/*-------------------------------------------------------------------
+  # DATABASE CARD TAG STYLES (SMALLER & CLEANER)
+-------------------------------------------------------------------*/
+
+/* Remove bold emphasis from tag headings */
+.card-tags div {
+  font-size: 12px;  /* Smaller font size for tag headings */
+  font-weight: normal; /* No bold */
+  margin-bottom: 3px;
+}
+
+/*-----------------------------------------------
+    # DATABASE CARD TAG STYLES (TWO-COLUMN LAYOUT)
+-----------------------------------------------*/
+
+/* Container for Each Tag Section */
+.tag-section {
+  display: grid;
+  grid-template-columns: 60px auto; /* Left column for heading, right for tags */
+  align-items: start; /* Align heading to first tag */
+  gap: 10px;
+  margin-bottom: 8px; /* Space between sections */
+}
+
+/* Headings (Left Column) */
+.tag-heading {
+  font-size: 12px;
+  font-weight: normal; /* No bold */
+  text-align: right;
+  color: var(--grey);
+  white-space: nowrap; /* Prevent wrapping */
+}
+
+/* Tags Container (Right Column) */
+.tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+/* Individual Tags */
+.tag {
+  display: inline-block;
+  background: var(--offwhite);
+  color: var(--offblack);
+  font-size: 10px; /* Smaller text */
+  font-weight: 400;
+  padding: 3px 6px; /* Reduce padding */
+  border-radius: 3px;
+  border: 1px solid var(--grey);
+  margin: 1px; /* Reduce space between tags */
+  white-space: nowrap;
+}
+
+/* RESPONSIVE: Adjust Cards for Smaller Screens */
+@media (max-width: 768px) {
+  .cards-container {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .database-card {
+      width: 90%;
+  }
+
+  .filters {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .filter-group {
+      width: 100%;
+  }
 }
