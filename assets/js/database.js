@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   let database = [];
   let filters = {
-    participant_cat: [],
+    focus_cat: [],
     medical_cat: [],
     outcome_cat: [],
   };
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
             year: columns[0].trim(),
             authors: decodeEntities(columns[1].trim()), // Decode special characters
             title: decodeEntities(columns[2].trim()),
-            participant_cat: decodeEntities(columns[3].trim()),
+            focus_cat: decodeEntities(columns[3].trim()),
             medical_cat: decodeEntities(columns[4].trim()),
             outcome_cat: decodeEntities(columns[5].trim()),
             doi_link: columns[6].trim(),
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // Generate Filters Dynamically with Count
 // Generate Filters Dynamically with Count
 function generateFilters() {
-    const categories = ["participant_cat", "medical_cat", "outcome_cat"];
+    const categories = ["focus_cat", "medical_cat", "outcome_cat"];
 
     categories.forEach(category => {
         let container = document.getElementById(`${category}-filters`);
@@ -148,71 +148,71 @@ function generateFilters() {
     container.innerHTML = ""; // Clear previous entries
 
     let filteredData = database.filter((item) => {
-      return (
-        (filters.participant_cat.length === 0 ||
-          filters.participant_cat.some((filter) =>
-            item.participant_cat
-              .toLowerCase()
-              .includes(filter.toLowerCase().trim())
-          )) &&
-        (filters.medical_cat.length === 0 ||
-          filters.medical_cat.some((filter) =>
-            item.medical_cat.toLowerCase().includes(filter.toLowerCase().trim())
-          )) &&
-        (filters.outcome_cat.length === 0 ||
-          filters.outcome_cat.some((filter) =>
-            item.outcome_cat.toLowerCase().includes(filter.toLowerCase().trim())
-          ))
-      );
+        return (
+            (filters.focus_cat.length === 0 ||
+                filters.focus_cat.some((filter) =>
+                    item.focus_cat.toLowerCase().includes(filter.toLowerCase().trim())
+                )) &&
+            (filters.medical_cat.length === 0 ||
+                filters.medical_cat.some((filter) =>
+                    item.medical_cat.toLowerCase().includes(filter.toLowerCase().trim())
+                )) &&
+            (filters.outcome_cat.length === 0 ||
+                filters.outcome_cat.some((filter) =>
+                    item.outcome_cat.toLowerCase().includes(filter.toLowerCase().trim())
+                ))
+        );
     });
 
     filteredData.forEach((item) => {
-      let doiURL = item.doi_link.trim();
-      let hasDOI =
-        doiURL !== "" && doiURL !== "-" && /^https?:\/\//.test(doiURL);
+        let doiURL = item.doi_link.trim();
+        let hasDOI = doiURL !== "" && doiURL !== "-" && /^https?:\/\//.test(doiURL);
 
-      let card = document.createElement("div");
-      card.className = "database-card";
+        let card = document.createElement("div");
+        card.className = "database-card";
 
-      if (hasDOI) {
-        card.addEventListener("click", () => window.open(doiURL, "_blank"));
-      }
+        if (hasDOI) {
+            card.addEventListener("click", () => window.open(doiURL, "_blank"));
+        }
 
-      // Function to generate tags inside a two-column div
-      const createTagSection = (heading, values) => {
-        let tagsArray = values
-          .split(";")
-          .map((value) => `<span class="tag">${value.trim()}</span>`)
-          .join("");
-        return `
+        // Function to generate tag sections only if the field has data
+        const createTagSection = (heading, values) => {
+            if (!values || values.trim() === "" || values.trim() === "-") return ""; // Hide section if empty
+            let tagsArray = values.split(";").map(value => `<span class="tag">${value.trim()}</span>`).join("");
+            return `
                 <div class="tag-section">
                     <div class="tag-heading">${heading}</div>
                     <div class="tag-container">${tagsArray}</div>
                 </div>
             `;
-      };
+        };
 
-      // Remove ONLY the first and last double quotes if they exist
-      let cleanTitle = item.title.replace(/^"(.*)"$/, "$1");
+        // Generate tag sections only if they have data
+        let participantTags = createTagSection("Focus:", item.focus_cat);
+        let medicalTags = createTagSection("Population:", item.medical_cat);
+        let outcomeTags = createTagSection("Findings:", item.outcome_cat);
 
-      card.innerHTML = `
+        // Combine tag sections and only add the wrapper if at least one exists
+        let tagSectionHTML = participantTags || medicalTags || outcomeTags
+            ? `<div class="card-tags">${participantTags}${medicalTags}${outcomeTags}</div>`
+            : "";
+
+        // Remove only the first and last double quotes if they exist
+        let cleanTitle = item.title.replace(/^"(.*)"$/, "$1");
+
+        card.innerHTML = `
             <div class="card-header">
-                <div><p class="authors-year">${item.authors}, ${
-        item.year
-      }</p></div>
+                <div><p class="authors-year">${item.authors}, ${item.year}</p></div>
                 ${hasDOI ? `<div class="doi-flag">Access Paper</div>` : ""}
             </div>
             <div class="card-title">${cleanTitle}</div>
-            <div class="card-tags">
-                ${createTagSection("Focus:", item.participant_cat)}
-                ${createTagSection("Population:", item.medical_cat)}
-                ${createTagSection("Findings:", item.outcome_cat)}
-            </div>
+            ${tagSectionHTML} <!-- Only added if any tags exist -->
         `;
 
-      container.appendChild(card);
+        container.appendChild(card);
     });
-  }
+}
+
 
   // Initialize
   loadDatabase();
