@@ -10,32 +10,34 @@ document.addEventListener("DOMContentLoaded", function () {
     const response = await fetch("assets/database.csv");
     const text = await response.text();
 
-    // Convert CSV text into rows, ensuring quoted fields are handled correctly
-    const rows = text.trim().split("\n").slice(1); // Skip header row
+    // Ensure text is read as UTF-8 (Handling Special Characters)
+    const utf8decoder = new TextDecoder("utf-8"); 
+    const decodedText = utf8decoder.decode(new TextEncoder().encode(text));
 
-    database = rows
-      .map((row) => {
-        const columns = parseCSVRow(row); // Use our custom parser function
+    const rows = decodedText.trim().split("\n").slice(1); // Skip header row
+
+    database = rows.map(row => {
+        const columns = parseCSVRow(row);
 
         if (columns.length < 7) return null; // Skip malformed rows
 
         return {
-          year: columns[0].trim(),
-          authors: columns[1].trim(),
-          title: columns[2].trim(), // This now correctly preserves punctuation
-          participant_cat: columns[3].trim(),
-          medical_cat: columns[4].trim(),
-          outcome_cat: columns[5].trim(),
-          doi_link: columns[6].trim(),
+            year: columns[0].trim(),
+            authors: decodeEntities(columns[1].trim()), // Decode special characters
+            title: decodeEntities(columns[2].trim()),
+            participant_cat: decodeEntities(columns[3].trim()),
+            medical_cat: decodeEntities(columns[4].trim()),
+            outcome_cat: decodeEntities(columns[5].trim()),
+            doi_link: columns[6].trim(),
         };
-      })
-      .filter((item) => item !== null);
+    }).filter(item => item !== null);
 
     console.log("Database loaded:", database); // Debugging Output
 
-    generateFilters(); // ✅ Call after data is loaded
-    displayCards(); // ✅ Call after data is loaded
-  }
+    generateFilters(); 
+    displayCards(); 
+}
+
 
   function parseCSVRow(row) {
     const result = [];
@@ -242,3 +244,9 @@ document.getElementById("reset-filters").addEventListener("click", () => {
   // Trigger filtering logic again (if applicable)
   applyFilters(); // Ensure this function updates the displayed data
 });
+
+function decodeEntities(encodedString) {
+    let textarea = document.createElement("textarea");
+    textarea.innerHTML = encodedString;
+    return textarea.value;
+}
