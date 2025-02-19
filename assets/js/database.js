@@ -64,8 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
     return result;
   }
 
-  // Generate Filters Dynamically
-// Generate Filters Dynamically with Count
 // Generate Filters Dynamically with Count
 function generateFilters() {
     const categories = ["focus_cat", "medical_cat", "outcome_cat"];
@@ -250,3 +248,14 @@ function decodeEntities(encodedString) {
     textarea.innerHTML = encodedString;
     return textarea.value;
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  const toggleButton = document.getElementById("toggle-filters");
+  const filtersSection = document.querySelector(".filters");
+
+  toggleButton.addEventListener("click", function () {
+      const isCollapsed = filtersSection.classList.toggle("collapsed");
+      // Toggle the button text between "Show Filters" and "Hide Filters"
+      toggleButton.textContent = isCollapsed ? "Show Filters" : "Hide Filters";
+  });
+});
