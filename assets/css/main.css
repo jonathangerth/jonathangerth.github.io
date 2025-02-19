@@ -94,12 +94,22 @@
 # DATABASE STYLING
 --------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 @media (max-width: 1199px) {
-  .header {
-      left: -100%; /* Initially hidden */
-  }
-  .header-toggle{
-    display: block;  /* Show hamburger menu on mobile */
-  }
+ 
+    .header-toggle {
+      display: block;
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      font-size: 24px;
+      background-color: var(--accent-color);
+      color: var(--contrast-color);
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1000;
+    }
+  
+  
   .header-show {
       left: 0; /* Show when toggled */
   }
@@ -213,9 +223,6 @@ span {
   overflow-y: auto;
   z-index: 997;
   border-right: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
-  /* Light shadow */
-
 }
 
 .header .profile-img img {
@@ -284,7 +291,7 @@ span {
   left: 0;
 }
 
-.header {
+.header .header-toggle {
   color: var(--contrast-color);
   background-color: var(--accent-color);
   font-size: 22px;
@@ -300,11 +307,6 @@ span {
   right: 15px;
   z-index: 9999;
   transition: background-color 0.3s;
-
-}
-
-.header-toggle {
-  display: none;  /* Hidden by default */
 }
 
 .header .header-toggle:hover {
@@ -316,7 +318,6 @@ span {
 # Navigation Menu
 --------------------------------------------------------------*/
 .mobile-nav-toggle {
-  display: none;
 }
 
 .navmenu {
@@ -434,12 +435,14 @@ span {
   height: 44px;
   border-radius: 50px;
   transition: all 0.4s;
+  z-index: 0;
 }
 
 .scroll-top i {
   font-size: 24px;
   color: var(--contrast-color);
   line-height: 0;
+  z-index: 2;
 }
 
 .scroll-top:hover {
@@ -510,22 +513,20 @@ section,
 }
 
 section .content-container {
-  padding-left: 60px;
+  padding: 10px;
 }
 
 /*--------------------------------------------------------------
 # Global Section Titles
 --------------------------------------------------------------*/
 .section-title {
-  padding-bottom: 20px;
   position: relative;
+  align-items: left;
 }
 
 .section-title h2 {
   font-size: 32px;
   font-weight: 700;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
   position: relative;
 }
 
@@ -686,7 +687,6 @@ section .content-container {
 }
 
 .about-list {
-  padding-left: 40px;
   font-size: smaller;
 }
 
@@ -716,31 +716,9 @@ section .content-container {
 # Tools Section
 --------------------------------------------------------------*/
 
-.tools .topics-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  grid-auto-rows: minmax(auto, auto);
-  padding-bottom: 10px;
-}
-
-.topics-tile {
-  background-color: var(--deep-indigo-trans1);
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  /* font-weight: lighter; */
-  text-align: center;
-  height: 80px;
-  padding: 10px;
-  align-content: center;
-  justify-content: space-between;
-  /* Centers the content vertically */
-}
-
 .tools .tools-container {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   grid-auto-rows: minmax(auto, auto);
 }
@@ -848,15 +826,6 @@ section .content-container {
 /*--------------------------------------------------------------
 # PROJECTS Section
 --------------------------------------------------------------*/
-
-.projects .container-tiles-featured {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
-  padding-bottom: 10px;
-}
-
 .projects .container-tiles-other {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -869,6 +838,7 @@ section .content-container {
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   padding: 10px;
+  margin: 10px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   align-content: start;
 }
@@ -1104,7 +1074,6 @@ section .content-container {
   /* Ensures enough space inside the button */
   border-radius: 4px;
   transition: background-color 0.3s ease, color 0.3s ease;
-  margin-left: 5px;
   /* Adds spacing between the paragraph text and the button */
   white-space: nowrap;
   /* Prevents wrapping for the text and icon */
@@ -1123,7 +1092,7 @@ section .content-container {
 .pubs-list p {
   margin: 0;
   /* Reset default margin */
-  padding-left: 20px;
+  /* padding-left: 20px; */
   /* Creates space for the hanging indent */
   text-indent: -20px;
   /* Negative value aligns the first line to the left */
