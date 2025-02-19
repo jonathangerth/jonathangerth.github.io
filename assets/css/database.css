@@ -292,6 +292,15 @@ HERO SECTION
   outline-offset: 2px;
 }
 
+#toggle-filters i {
+  margin-right: 10px; /* Space between the text and the icon */
+  transition: transform 0.3s ease-in-out;
+}
+
+#toggle-filters.collapsed i {
+  transform: rotate(180deg); /* Flip the icon when collapsed */
+}
+
 
 .reset-button {
   background-color: var(--sienna);

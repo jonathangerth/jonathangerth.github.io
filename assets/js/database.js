@@ -314,11 +314,17 @@ function decodeEntities(encodedString) {
 document.addEventListener("DOMContentLoaded", function () {
   const toggleButton = document.getElementById("toggle-filters");
   const filtersSection = document.querySelector(".filters");
+  const arrowIcon = document.getElementById("arrow-icon");
 
   toggleButton.addEventListener("click", function () {
-      const isCollapsed = filtersSection.classList.toggle("collapsed");
-      // Toggle the button text between "Show Filters" and "Hide Filters"
-      toggleButton.textContent = isCollapsed ? "Show Filters" : "Hide Filters";
+    const isCollapsed = filtersSection.classList.toggle("collapsed");
+
+    // Hard assign the button text and arrow icon based on the collapsed state
+    if (isCollapsed) {
+      toggleButton.innerHTML = 'Show Filters <i id="arrow-icon" class="bi bi-arrow-down"></i> ';
+    } else {
+      toggleButton.innerHTML = 'Hide Filters <i id="arrow-icon" class="bi bi-arrow-up"></i> ';
+    }
   });
 });
 
