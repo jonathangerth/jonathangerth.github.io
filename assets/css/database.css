@@ -181,11 +181,28 @@ HERO SECTION
   gap: 6px;
 }
 
+.testing {
+  color: red;
+  background-color: yellow;
+}
+
 .filter-options .filter-count {
   font-weight: 300;
   color: var(--grey);
   font-size: 0.9em;
   transition: color 0.3s ease-in-out;
+}
+
+/* Ensure the text color is greyed out */
+.disabled-filter {
+  color: grey !important;  /* Make text grey */
+  opacity: 0.75 !important; /* Reduce opacity */
+}
+
+/* Ensure disabled checkboxes cannot be clicked */
+.disabled-filter input[type="checkbox"] {
+  pointer-events: none; /* Prevent clicks */
+  opacity: 1.0; /* Slight transparency */
 }
 
 

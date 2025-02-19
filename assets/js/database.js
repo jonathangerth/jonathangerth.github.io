@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
   let database = [];
   let filters = {
-    focus_cat: [],
-    medical_cat: [],
-    outcome_cat: [],
+      focus_cat: [],
+      medical_cat: [],
+      outcome_cat: []
   };
 
   async function loadDatabase() {
@@ -31,9 +31,6 @@ document.addEventListener("DOMContentLoaded", function () {
             doi_link: columns[6].trim(),
         };
     }).filter(item => item !== null);
-
-    console.log("Database loaded:", database); // Debugging Output
-
     generateFilters(); 
     displayCards(); 
 }
@@ -66,79 +63,136 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Generate Filters Dynamically with Count
 function generateFilters() {
-    const categories = ["focus_cat", "medical_cat", "outcome_cat"];
+  const categories = ["focus_cat", "medical_cat", "outcome_cat"];
 
-    categories.forEach(category => {
-        let container = document.getElementById(`${category}-filters`);
-        if (!container) {
-            console.error(`Filter container not found: #${category}-filters`);
-            return;
-        }
+  categories.forEach(category => {
+      let container = document.getElementById(`${category}-filters`);
+      if (!container) return;
 
-        // Count occurrences of each filter value
-        let filterCounts = {};
+      let filterCounts = {};
 
-        database.forEach(item => {
-            if (item[category]) {
-                item[category].split(";").map(value => value.trim()).forEach(value => {
-                    filterCounts[value] = (filterCounts[value] || 0) + 1;
-                });
-            }
-        });
+      database.forEach(item => {
+          if (item[category]) {
+              let values = item[category].split(";").map(value => value.trim());
+              values.forEach(value => {
+                  filterCounts[value] = (filterCounts[value] || 0) + 1;
+              });
+          }
+      });
 
-        // Sort values alphabetically
-        let sortedValues = Object.keys(filterCounts).sort();
+      let sortedValues = Object.keys(filterCounts).sort();
+      if (sortedValues.length === 0) {
+          container.innerHTML = "<p>No options available.</p>";
+          return;
+      }
 
-        // Ensure we have values to display
-        if (sortedValues.length === 0) {
-            container.innerHTML = "<p>No options available.</p>";
-            return;
-        }
+      sortedValues.forEach(value => {
+          let count = filterCounts[value];
 
-        // Generate checkboxes dynamically
-        sortedValues.forEach(value => {
-            let count = filterCounts[value]; // Get count for this filter value
+          let checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.value = value;
+          checkbox.id = `${category}-${value.replace(/\s+/g, "-").toLowerCase()}`;
+          checkbox.addEventListener("change", () => {
+              updateFilters(category, value);
+              updateFilterCounts();
+          });
 
-            let checkbox = document.createElement("input");
-            checkbox.type = "checkbox";
-            checkbox.value = value;
-            checkbox.id = `${category}-${value.replace(/\s+/g, "-").toLowerCase()}`;
-            checkbox.addEventListener("change", () => updateFilters(category, value));
+          let label = document.createElement("label");
+          label.htmlFor = checkbox.id;
+          label.appendChild(checkbox);
 
-            let label = document.createElement("label");
-            label.htmlFor = checkbox.id;
-            label.appendChild(checkbox);
-            
-            // Main text for the option
-            let textSpan = document.createElement("span");
-            textSpan.textContent = ` ${value} `;
+          let textSpan = document.createElement("span");
+          textSpan.textContent = ` ${value} `;
 
-            // Bracketed count with a CSS class for styling
-            let countSpan = document.createElement("span");
-            countSpan.className = "filter-count"; 
-            countSpan.textContent = `[${count}]`;
+          let countSpan = document.createElement("span");
+          countSpan.className = "filter-count"; 
+          countSpan.textContent = `[${count}]`;
 
-            // Append both to the label
-            label.appendChild(textSpan);
-            label.appendChild(countSpan);
-
-            container.appendChild(label);
-        });
-    });
+          label.appendChild(textSpan);
+          label.appendChild(countSpan);
+          container.appendChild(label);
+      });
+  });
 }
 
+
+
+function updateFilterCounts() {
+  const categories = ["focus_cat", "medical_cat", "outcome_cat"];
+  let filteredData = getFilteredData(); // Get only items that match the selected filters
+  console.log("updateFilterCounts is running");
+
+  categories.forEach(category => {
+      let filterCounts = {};
+
+      // Count how many items match each filter based on active selections
+      filteredData.forEach(item => {
+          if (item[category]) {
+              let values = item[category].split(";").map(value => value.trim());
+              values.forEach(value => {
+                  filterCounts[value] = (filterCounts[value] || 0) + 1;
+              });
+          }
+      });
+
+      // Debugging: Check updated filter counts
+      console.log(`Updated filter counts for ${category}:`, filterCounts);
+
+      // Update checkboxes dynamically based on available items
+      document.querySelectorAll(`#${category}-filters label`).forEach(label => {
+          let checkbox = label.querySelector("input[type='checkbox']");
+          let countSpan = label.querySelector(".filter-count");
+          let filterValue = checkbox.value.trim();
+
+          // Debugging: Check if we're targeting the correct elements
+          console.log("Processing Filter:", filterValue, "Count:", filterCounts[filterValue]);
+
+          // Ensure filter count updates correctly
+          let count = filterCounts[filterValue] || 0;
+
+          countSpan.textContent = `[${count}]`; // Update the number next to the checkbox
+
+          if (count === 0) {
+              console.log("Disabling:", filterValue); // Debugging
+              label.classList.add("disabled-filter"); // Apply grey-out styling
+          } else {
+              console.log("Enabling:", filterValue); // Debugging
+              label.classList.remove("disabled-filter"); // Remove grey-out effect
+          }
+      });
+  });
+}
 
 
   // Update Filter Values & Refresh Cards
   function updateFilters(category, value) {
     let index = filters[category].indexOf(value);
     if (index > -1) {
-      filters[category].splice(index, 1); // Remove if unchecked
+        filters[category].splice(index, 1); // Remove if unchecked
     } else {
-      filters[category].push(value); // Add if checked
+        filters[category].push(value); // Add if checked
     }
     displayCards();
+    updateFilterCounts(); // Recalculate numbers dynamically
   }
+
+
+function getFilteredData() {
+  return database.filter(item => {
+      let focusCat = item.focus_cat ? item.focus_cat.split(";").map(v => v.trim()) : [];
+      let medicalCat = item.medical_cat ? item.medical_cat.split(";").map(v => v.trim()) : [];
+      let outcomeCat = item.outcome_cat ? item.outcome_cat.split(";").map(v => v.trim()) : [];
+
+      return (
+          (filters.focus_cat.length === 0 || filters.focus_cat.some(filter => focusCat.includes(filter))) &&
+          (filters.medical_cat.length === 0 || filters.medical_cat.some(filter => medicalCat.includes(filter))) &&
+          (filters.outcome_cat.length === 0 || filters.outcome_cat.some(filter => outcomeCat.includes(filter)))
+      );
+  });
+}
+
+
 
   // Display Cards Dynamically
   function displayCards() {
@@ -211,6 +265,14 @@ function generateFilters() {
     });
 }
 
+document.getElementById("reset-filters").addEventListener("click", () => {
+  document.querySelectorAll(".filter-options input[type='checkbox']").forEach(checkbox => {
+      checkbox.checked = false;
+  });
+  filters = { focus_cat: [], medical_cat: [], outcome_cat: [] };
+  displayCards();
+  updateFilterCounts(); // Reset filter counts
+});
 
   // Initialize
   loadDatabase();
@@ -259,3 +321,4 @@ document.addEventListener("DOMContentLoaded", function () {
       toggleButton.textContent = isCollapsed ? "Show Filters" : "Hide Filters";
   });
 });
+
