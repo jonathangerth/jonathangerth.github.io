@@ -87,6 +87,7 @@ HERO SECTION
   justify-content: center;
   gap: 20px;
   text-align: center;
+  padding: 20px;
 }
 
 /*-------------------------------------------------------------------
@@ -115,6 +116,7 @@ HERO SECTION
   width: 100%;
   gap: 20px;  /* Horizontal gap by default */
   transition: all 0.3s ease; /* Smooth transition */
+  z-index: -1;
 }
 
 /* Each filter group */
@@ -263,6 +265,7 @@ HERO SECTION
   gap: 10px; /* Space between buttons */
   margin-bottom: 10px; /* Space below buttons */
   justify-content: space-between; /* Make sure buttons take up half the width each */
+  z-index: 2;
 }
 
 /* Buttons for Reset & Toggle Filters */
@@ -271,7 +274,7 @@ HERO SECTION
   background-color: var(--sienna);
   color: white;
   border: 2px solid var(--sienna);
-  padding: 10px 20px;
+  padding: 10px 15px;
   font-size: 16px;
   font-weight: bold;
   border-radius: 6px;
@@ -279,6 +282,7 @@ HERO SECTION
   transition: all 0.3s ease-in-out;
   text-align: center;
   width: 48%; /* Ensure buttons fit within container */
+  white-space: nowrap; /* Prevent text from wrapping */
 }
 
 .filter-button:hover {
@@ -489,10 +493,20 @@ MOBILE SCREEN RESPONSIVENESS
   .filters {
     flex-direction: column;  /* Stack filter groups vertically on mobile */
     gap: 10px;  /* Smaller gap between stacked filters */
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 1;  /* Make it visible by default */
+    z-index: 0;  /* Ensure filters are on top of other elements */
+  }
+
+  .filters.collapsed {
+    transform: translateY(-100%); /* Move the filters up out of view */
+    opacity: 0;  /* Fade them out */
+    z-index: -1; /* Keep the filters behind other elements when collapsed */
   }
 
   .filter-group {
     width: 100%; /* Ensure each filter group takes up the full width */
+    z-index: 0; /* Ensure the filter groups remain in the correct stacking order */
   }
 
   .filter-group h3 {
@@ -500,10 +514,73 @@ MOBILE SCREEN RESPONSIVENESS
       font-size: 14px; /* Slightly smaller text */
   }
 
-  .filter-options {
+  .filter-options  {
       max-height: 120px; /* Slightly smaller to save space */
       padding: 4px;
+      font-size: 10px;
+      display: grid;  
+      /* Use grid for multi-column layout */
+      grid-template-columns: repeat(2, 1fr);  /* Create 2 equal-width columns */
   }
+
+  .filter-controls {
+    z-index: 1;  /* Higher than the filters */
+  }
+
+  #toggle-filters, #reset-filters {
+    z-index: 2; /* Ensure the buttons remain on top of the filters */
+  }
+  .filter-button {
+    font-size: 14px; /* Shrink font size */
+    padding: 8px 12px; /* Reduce padding */
+  }
+
+  .database-hero {
+    padding: 10px;  /* Reduced padding for small screens */
+    height: min-content;
+  }
+
+  .database-hero h2 {
+    font-size: 1.5rem;  /* Smaller font size on narrow screens */
+    line-height: 1.2;  /* Adjust line-height for smaller font size */
+  }
+
+  .filter-options label {
+    font-size: 0.8rem;
+  }
+
+
+  .database-card {
+    width: calc(50% - 20px);
+  }
+
+  .filter-options input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .database-hero .container {
+    padding: 8px;  /* Even smaller padding */
+  }
+  .database-card {
+    width: calc(100% - 20px);
+  }
+
+  .database-hero h2 {
+    font-size: 1.25rem;  /* Even smaller font size */
+    line-height: 1.2;
+  }
+  .filter-options input[type="checkbox"] {
+    width: 12px;
+    height: 12px;
+  }
+
+  .filter-options  {
+    /* Use grid for multi-column layout */
+    grid-template-columns: repeat(1, 1fr);  /* Create 2 equal-width columns */
+}
 }
 
 
@@ -512,4 +589,14 @@ MOBILE SCREEN RESPONSIVENESS
   body.database-page main {
       margin-left: 300px;
   }
+
+  .database-card {
+    width: calc(50% - 20px);
+  }
+
+  .filter-options input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+  }
+
 }

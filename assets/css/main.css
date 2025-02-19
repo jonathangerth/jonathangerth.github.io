@@ -97,6 +97,9 @@
   .header {
       left: -100%; /* Initially hidden */
   }
+  .header-toggle{
+    display: block;  /* Show hamburger menu on mobile */
+  }
   .header-show {
       left: 0; /* Show when toggled */
   }
@@ -281,7 +284,7 @@ span {
   left: 0;
 }
 
-.header .header-toggle {
+.header {
   color: var(--contrast-color);
   background-color: var(--accent-color);
   font-size: 22px;
@@ -297,6 +300,11 @@ span {
   right: 15px;
   z-index: 9999;
   transition: background-color 0.3s;
+
+}
+
+.header-toggle {
+  display: none;  /* Hidden by default */
 }
 
 .header .header-toggle:hover {
