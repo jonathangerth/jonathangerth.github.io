@@ -321,8 +321,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!value || value.trim() === "" || value.trim() === "-") return "";
         return `
           <div class="tag-section">
-            <div class="tag-heading">${heading}</div>
-            <div class="tag-container"><span class="tag">${value.trim()}</span></div>
+            <div class="detail-heading">${heading}</div>
+            <div class="tag-container">${value.trim()}</span></div>
           </div>
         `;
       };
@@ -330,10 +330,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const validFindings = findings.filter(f => f && f.trim() && f.trim() !== "-");
         if (validFindings.length === 0) return "";
         return `
-          <div class="tag-section">
-            <div class="tag-heading">${heading}</div>
+          <div class="tag-section findings-list">
+            <div class="detail-heading">${heading}</div>
             <div class="tag-container">
-              ${validFindings.map(f => `<span class="tag">${f.trim()}</span>`).join("")}
+              ${validFindings.map(f => `&#8226; ${f.trim()}`).join("<br>")}
             </div>
           </div>
         `;
@@ -361,7 +361,7 @@ document.addEventListener("DOMContentLoaded", function () {
       ) {
         expandedDetails = `
           <div class="expanded-details" style="display:none;">
-            <div class="card-tags">
+            <div class="detail-value">
               ${detailContext}
               ${detailMethod}
               ${detailParticipants}
