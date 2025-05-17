@@ -36,11 +36,11 @@ document.addEventListener("DOMContentLoaded", function () {
             camp_type: decodeEntities(columns[7]?.trim() || ""),
             method: decodeEntities(columns[8]?.trim() || ""),
             participant_details: decodeEntities(columns[9]?.trim() || ""),
-            outcome1: decodeEntities(columns[10]?.trim() || ""),
-            outcome2: decodeEntities(columns[11]?.trim() || ""),
-            outcome3: decodeEntities(columns[12]?.trim() || ""),
-            outcome4: decodeEntities(columns[13]?.trim() || ""),
-            outcome5: decodeEntities(columns[14]?.trim() || ""),
+            finding1: decodeEntities(columns[10]?.trim() || ""),
+            finding2: decodeEntities(columns[11]?.trim() || ""),
+            finding3: decodeEntities(columns[12]?.trim() || ""),
+            finding4: decodeEntities(columns[13]?.trim() || ""),
+            finding5: decodeEntities(columns[14]?.trim() || ""),
           };
         })
         .filter((item) => item !== null);
@@ -320,17 +320,17 @@ document.addEventListener("DOMContentLoaded", function () {
       // Expanded details (only visible when card-expanded)
       let expandedDetails = `
         <div class="expanded-details" style="display:none;">
-          ${item.camp_type ? `<div><strong>Camp Type:</strong> ${item.camp_type}</div>` : ""}
+          ${item.camp_type ? `<div><strong>Context:</strong> ${item.camp_type}</div>` : ""}
           ${item.method ? `<div><strong>Method:</strong> ${item.method}</div>` : ""}
-          ${item.participant_details ? `<div><strong>Participant Details:</strong> ${item.participant_details}</div>` : ""}
-          ${(item.outcome1 || item.outcome2 || item.outcome3 || item.outcome4 || item.outcome5) ? `
-            <div><strong>Outcomes:</strong>
+          ${item.participant_details ? `<div><strong>Participants:</strong> ${item.participant_details}</div>` : ""}
+          ${(item.finding1 || item.finding2 || item.finding3 || item.finding4 || item.finding5) ? `
+            <div><strong>Findings:</strong>
               <ul>
-                ${item.outcome1 ? `<li>${item.outcome1}</li>` : ""}
-                ${item.outcome2 ? `<li>${item.outcome2}</li>` : ""}
-                ${item.outcome3 ? `<li>${item.outcome3}</li>` : ""}
-                ${item.outcome4 ? `<li>${item.outcome4}</li>` : ""}
-                ${item.outcome5 ? `<li>${item.outcome5}</li>` : ""}
+                ${item.finding1 ? `<li>${item.finding1}</li>` : ""}
+                ${item.finding2 ? `<li>${item.finding2}</li>` : ""}
+                ${item.finding3 ? `<li>${item.finding3}</li>` : ""}
+                ${item.finding4 ? `<li>${item.finding4}</li>` : ""}
+                ${item.finding5 ? `<li>${item.finding5}</li>` : ""}
               </ul>
             </div>
           ` : ""}
