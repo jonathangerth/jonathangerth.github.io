@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
         checkbox.id = `${category}-${value.replace(/\s+/g, "-").toLowerCase()}`;
         checkbox.addEventListener("change", () => {
           updateFilters(category, value);
-          updateFilterCounts();
+          debouncedUpdateFilterCounts();
         });
 
         let label = document.createElement("label");
@@ -130,15 +130,25 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // Debounce utility
+  function debounce(fn, delay) {
+    let timer = null;
+    return function (...args) {
+      clearTimeout(timer);
+      timer = setTimeout(() => fn.apply(this, args), delay);
+    };
+  }
+
+  // Debounced version of updateFilterCounts
+  const debouncedUpdateFilterCounts = debounce(updateFilterCounts, 100);
+
   function updateFilterCounts() {
     const categories = ["focus_cat", "medical_cat", "outcome_cat"];
-    let filteredData = getFilteredData(); // Get only items that match the selected filters
-    console.log("updateFilterCounts is running");
+    let filteredData = getFilteredData();
 
     categories.forEach((category) => {
       let filterCounts = {};
 
-      // Count how many items match each filter based on active selections
       filteredData.forEach((item) => {
         if (item[category]) {
           let values = item[category].split(";").map((value) => value.trim());
@@ -148,10 +158,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
 
-      // Debugging: Check updated filter counts
-      console.log(`Updated filter counts for ${category}:`, filterCounts);
-
-      // Update checkboxes dynamically based on available items
       document
         .querySelectorAll(`#${category}-filters label`)
         .forEach((label) => {
@@ -159,25 +165,13 @@ document.addEventListener("DOMContentLoaded", function () {
           let countSpan = label.querySelector(".filter-count");
           let filterValue = checkbox.value.trim();
 
-          // Debugging: Check if we're targeting the correct elements
-          console.log(
-            "Processing Filter:",
-            filterValue,
-            "Count:",
-            filterCounts[filterValue]
-          );
-
-          // Ensure filter count updates correctly
           let count = filterCounts[filterValue] || 0;
-
-          countSpan.textContent = `[${count}]`; // Update the number next to the checkbox
+          countSpan.textContent = `[${count}]`;
 
           if (count === 0) {
-            console.log("Disabling:", filterValue); // Debugging
-            label.classList.add("disabled-filter"); // Apply grey-out styling
+            label.classList.add("disabled-filter");
           } else {
-            console.log("Enabling:", filterValue); // Debugging
-            label.classList.remove("disabled-filter"); // Remove grey-out effect
+            label.classList.remove("disabled-filter");
           }
         });
     });
@@ -192,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
       filters[category].push(value); // Add if checked
     }
     displayCards();
-    updateFilterCounts(); // Recalculate numbers dynamically
+    debouncedUpdateFilterCounts(); // Use debounced version
   }
 
   function getFilteredData() {
@@ -218,7 +212,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Display Cards Dynamically
+  // Display Cards Dynamically (use DocumentFragment for batching)
   function displayCards() {
     let container = document.getElementById("database-cards");
     container.innerHTML = ""; // Clear previous entries
@@ -239,6 +233,9 @@ document.addEventListener("DOMContentLoaded", function () {
           ))
       );
     });
+
+    // Use DocumentFragment for efficient DOM updates
+    const fragment = document.createDocumentFragment();
 
     filteredData.forEach((item) => {
       let doiURL = item.doi_link.trim();
@@ -292,8 +289,10 @@ document.addEventListener("DOMContentLoaded", function () {
             ${tagSectionHTML} <!-- Only added if any tags exist -->
         `;
 
-      container.appendChild(card);
+      fragment.appendChild(card);
     });
+
+    container.appendChild(fragment);
   }
 
   // Reset filters logic (single listener)
