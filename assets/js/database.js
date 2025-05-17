@@ -8,34 +8,46 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   async function loadDatabase() {
-    const response = await fetch("assets/database.csv");
-    const text = await response.text();
+    try {
+      const response = await fetch("assets/database.csv");
+      if (!response.ok) throw new Error("Network response was not ok");
+      const text = await response.text();
 
-    // Ensure text is read as UTF-8 (Handling Special Characters)
-    const utf8decoder = new TextDecoder("utf-8");
-    const decodedText = utf8decoder.decode(new TextEncoder().encode(text));
+      // Ensure text is read as UTF-8 (Handling Special Characters)
+      const utf8decoder = new TextDecoder("utf-8");
+      const decodedText = utf8decoder.decode(new TextEncoder().encode(text));
 
-    const rows = decodedText.trim().split("\n").slice(1); // Skip header row
+      const rows = decodedText.trim().split("\n").slice(1); // Skip header row
 
-    database = rows
-      .map((row) => {
-        const columns = parseCSVRow(row);
+      database = rows
+        .map((row) => {
+          const columns = parseCSVRow(row);
 
-        if (columns.length < 7) return null; // Skip malformed rows
+          if (columns.length < 7) return null; // Skip malformed rows
 
-        return {
-          year: columns[0].trim(),
-          authors: decodeEntities(columns[1].trim()), // Decode special characters
-          title: decodeEntities(columns[2].trim()),
-          focus_cat: decodeEntities(columns[3].trim()),
-          medical_cat: decodeEntities(columns[4].trim()),
-          outcome_cat: decodeEntities(columns[5].trim()),
-          doi_link: columns[6].trim(),
-        };
-      })
-      .filter((item) => item !== null);
-    generateFilters();
-    displayCards();
+          return {
+            year: columns[0].trim(),
+            authors: decodeEntities(columns[1].trim()), // Decode special characters
+            title: decodeEntities(columns[2].trim()),
+            focus_cat: decodeEntities(columns[3].trim()),
+            medical_cat: decodeEntities(columns[4].trim()),
+            outcome_cat: decodeEntities(columns[5].trim()),
+            doi_link: columns[6].trim(),
+          };
+        })
+        .filter((item) => item !== null);
+      generateFilters();
+      displayCards();
+    } catch (error) {
+      // Show user-friendly error message
+      const container = document.getElementById("database-cards");
+      if (container) {
+        container.innerHTML =
+          '<div class="error-message">Couldn’t load data. Please try again later.</div>';
+      }
+      // Optionally log error for debugging
+      console.error("Failed to load database:", error);
+    }
   }
 
   function parseCSVRow(row) {
