@@ -308,7 +308,6 @@ document.addEventListener("DOMContentLoaded", function () {
       let medicalTags = createTagSection("Population:", item.medical_cat);
       let outcomeTags = createTagSection("Findings:", item.outcome_cat);
 
-      // Combine tag sections and only add the wrapper if at least one exists
       let tagSectionHTML =
         participantTags || medicalTags || outcomeTags
           ? `<div class="card-tags">${participantTags}${medicalTags}${outcomeTags}</div>`
@@ -317,23 +316,51 @@ document.addEventListener("DOMContentLoaded", function () {
       // Remove only the first and last double quotes if they exist
       let cleanTitle = item.title.replace(/^"(.*)"$/, "$1");
 
-      // Expanded details (only visible when card-expanded)
+      // --- Card Details Section: Use same tag section format for details ---
+      // Helper for single-value fields (context, method, participants)
+      const createDetailTagSection = (heading, value) => {
+        if (!value || value.trim() === "" || value.trim() === "-") return "";
+        return `
+          <div class="tag-section">
+            <div class="tag-heading">${heading}</div>
+            <div class="tag-container"><span class="tag">${value.trim()}</span></div>
+          </div>
+        `;
+      };
+      // Helper for findings (multiple)
+      const createDetailFindingsSection = (heading, ...findings) => {
+        const validFindings = findings.filter(f => f && f.trim() && f.trim() !== "-");
+        if (validFindings.length === 0) return "";
+        return `
+          <div class="tag-section">
+            <div class="tag-heading">${heading}</div>
+            <div class="tag-container">
+              ${validFindings.map(f => `<span class="tag">${f.trim()}</span>`).join("")}
+            </div>
+          </div>
+        `;
+      };
+
+      let detailContext = createDetailTagSection("Context:", item.camp_type);
+      let detailMethod = createDetailTagSection("Method:", item.method);
+      let detailParticipants = createDetailTagSection("Participants:", item.participant_details);
+      let detailFindings = createDetailFindingsSection(
+        "Findings:",
+        item.finding1,
+        item.finding2,
+        item.finding3,
+        item.finding4,
+        item.finding5
+      );
+
       let expandedDetails = `
         <div class="expanded-details" style="display:none;">
-          ${item.camp_type ? `<div><strong>Context:</strong> ${item.camp_type}</div>` : ""}
-          ${item.method ? `<div><strong>Method:</strong> ${item.method}</div>` : ""}
-          ${item.participant_details ? `<div><strong>Participants:</strong> ${item.participant_details}</div>` : ""}
-          ${(item.finding1 || item.finding2 || item.finding3 || item.finding4 || item.finding5) ? `
-            <div><strong>Findings:</strong>
-              <ul>
-                ${item.finding1 ? `<li>${item.finding1}</li>` : ""}
-                ${item.finding2 ? `<li>${item.finding2}</li>` : ""}
-                ${item.finding3 ? `<li>${item.finding3}</li>` : ""}
-                ${item.finding4 ? `<li>${item.finding4}</li>` : ""}
-                ${item.finding5 ? `<li>${item.finding5}</li>` : ""}
-              </ul>
-            </div>
-          ` : ""}
+          <div class="card-tags">
+            ${detailContext}
+            ${detailMethod}
+            ${detailParticipants}
+            ${detailFindings}
+          </div>
         </div>
       `;
 
