@@ -107,6 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
         checkbox.type = "checkbox";
         checkbox.value = value;
         checkbox.id = `${category}-${value.replace(/\s+/g, "-").toLowerCase()}`;
+        checkbox.setAttribute("aria-label", `${category.replace("_cat", "").replace("_", " ")}: ${value}`);
         checkbox.addEventListener("change", () => {
           updateFilters(category, value);
           debouncedUpdateFilterCounts();
@@ -245,8 +246,18 @@ document.addEventListener("DOMContentLoaded", function () {
       let card = document.createElement("div");
       card.className = "database-card";
 
+      // Accessibility: Make card focusable and act as a button if clickable
       if (hasDOI) {
+        card.setAttribute("tabindex", "0");
+        card.setAttribute("role", "button");
+        card.setAttribute("aria-label", `Access paper: ${item.title}`);
         card.addEventListener("click", () => window.open(doiURL, "_blank"));
+        card.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            window.open(doiURL, "_blank");
+            e.preventDefault();
+          }
+        });
       }
 
       // Function to generate tag sections only if the field has data
