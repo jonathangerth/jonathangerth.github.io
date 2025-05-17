@@ -688,3 +688,32 @@ MOBILE SCREEN RESPONSIVENESS
   font-weight: 400;
   /* visually left-aligned, no bullet */
 }
+
+/* Add Article Button */
+.add-article-btn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: var(--tangerine, #EF8A17);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 6px 18px;
+  font-size: 0.95rem;
+  font-family: var(--default-font, Arial, sans-serif);
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, opacity 0.2s;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+}
+.add-article-btn:hover,
+.add-article-btn:focus {
+  opacity: 0.85;
+  background: var(--tangerine, #EF8A17);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  outline: none;
+}
