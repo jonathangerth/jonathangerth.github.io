@@ -63,11 +63,13 @@ HERO SECTION
   width: 100%;
   min-height: 20vh;
   display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Anchor content to the bottom */
   align-items: center;
-  justify-content: center;
   overflow: hidden;
-  position: relative; /* Change from sticky to relative */
-  z-index: 1; /* Keeps it behind sticky elements */
+  position: relative;
+  z-index: 1;
+  padding: 0;
 }
 
 .hero {
@@ -76,17 +78,20 @@ HERO SECTION
 }
 
 
+/* Ensure the hero title is at the bottom of the container */
 .database-hero .container {
   position: relative;
   z-index: 3;
   color: #ffffff;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end; /* Push title to the bottom */
   gap: 20px;
   text-align: center;
   padding: 20px;
+  height: 100%;
+  flex: 1 1 auto;
 }
 
 /*-------------------------------------------------------------------
@@ -716,4 +721,18 @@ MOBILE SCREEN RESPONSIVENESS
   background: var(--tangerine, #EF8A17);
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
   outline: none;
+}
+
+.add-article-btn .add-article-text {
+  display: inline;
+}
+
+@media (max-width: 600px) {
+  .add-article-btn .add-article-text {
+    display: none;
+  }
+  .add-article-btn {
+    padding: 6px 10px;
+    min-width: 0;
+  }
 }
