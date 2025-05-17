@@ -238,27 +238,35 @@ document.addEventListener("DOMContentLoaded", function () {
     // Use DocumentFragment for efficient DOM updates
     const fragment = document.createDocumentFragment();
 
-    filteredData.forEach((item) => {
+    filteredData.forEach((item, idx) => {
       let doiURL = item.doi_link.trim();
       let hasDOI =
         doiURL !== "" && doiURL !== "-" && /^https?:\/\//.test(doiURL);
 
       let card = document.createElement("div");
       card.className = "database-card";
+      card.setAttribute("data-card-idx", idx);
 
       // Accessibility: Make card focusable and act as a button if clickable
-      if (hasDOI) {
-        card.setAttribute("tabindex", "0");
-        card.setAttribute("role", "button");
-        card.setAttribute("aria-label", `Access paper: ${item.title}`);
-        card.addEventListener("click", () => window.open(doiURL, "_blank"));
-        card.addEventListener("keydown", (e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            window.open(doiURL, "_blank");
-            e.preventDefault();
-          }
+      card.setAttribute("tabindex", "0");
+      card.setAttribute("role", "button");
+      card.setAttribute("aria-label", `Access paper: ${item.title}`);
+
+      // Card expand/collapse logic
+      card.addEventListener("click", function (e) {
+        // Remove .card-expanded from all cards
+        document.querySelectorAll(".database-card.card-expanded").forEach((el) => {
+          if (el !== card) el.classList.remove("card-expanded");
         });
-      }
+        // Toggle this card
+        card.classList.toggle("card-expanded");
+      });
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          card.click();
+          e.preventDefault();
+        }
+      });
 
       // Function to generate tag sections only if the field has data
       const createTagSection = (heading, values) => {
