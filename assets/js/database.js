@@ -254,11 +254,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Card expand/collapse logic
       card.addEventListener("click", function (e) {
-        // Remove .card-expanded from all cards
+        // If the click originated from the .doi-flag, do not expand/collapse
+        if (e.target.classList.contains("doi-flag")) return;
         document.querySelectorAll(".database-card.card-expanded").forEach((el) => {
           if (el !== card) el.classList.remove("card-expanded");
         });
-        // Toggle this card
         card.classList.toggle("card-expanded");
       });
       card.addEventListener("keydown", (e) => {
@@ -297,16 +297,32 @@ document.addEventListener("DOMContentLoaded", function () {
       // Remove only the first and last double quotes if they exist
       let cleanTitle = item.title.replace(/^"(.*)"$/, "$1");
 
+      // Build card inner HTML, but add a placeholder for .doi-flag if present
       card.innerHTML = `
             <div class="card-header">
-                <div><p class="authors-year">${item.authors}, ${
-        item.year
-      }</p></div>
-                ${hasDOI ? `<div class="doi-flag">Access Paper</div>` : ""}
+                <div><p class="authors-year">${item.authors}, ${item.year}</p></div>
+                ${hasDOI ? `<div class="doi-flag" tabindex="0" role="button" aria-label="Open paper in new tab">Access Paper</div>` : ""}
             </div>
             <div class="card-title">${cleanTitle}</div>
             ${tagSectionHTML} <!-- Only added if any tags exist -->
         `;
+
+      // Add click and keyboard handler for .doi-flag
+      if (hasDOI) {
+        const doiFlag = card.querySelector('.doi-flag');
+        if (doiFlag) {
+          doiFlag.addEventListener('click', (e) => {
+            e.stopPropagation();
+            window.open(doiURL, "_blank");
+          });
+          doiFlag.addEventListener('keydown', (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              window.open(doiURL, "_blank");
+            }
+          });
+        }
+      }
 
       fragment.appendChild(card);
     });
