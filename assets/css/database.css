@@ -632,3 +632,19 @@ MOBILE SCREEN RESPONSIVENESS
   }
 
 }
+
+/* Expanded details section, hidden by default, shown when card is expanded */
+.expanded-details {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--surface-color, #FBF8C5);
+  border-radius: 6px;
+  font-size: 0.98em;
+  color: var(--offblack);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  animation: fadeIn 0.3s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px);}
+  to { opacity: 1; transform: translateY(0);}
+}

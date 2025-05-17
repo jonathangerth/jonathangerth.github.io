@@ -23,16 +23,24 @@ document.addEventListener("DOMContentLoaded", function () {
         .map((row) => {
           const columns = parseCSVRow(row);
 
-          if (columns.length < 7) return null; // Skip malformed rows
+          if (columns.length < 14) return null; // Now expect at least 14 columns
 
           return {
             year: columns[0].trim(),
-            authors: decodeEntities(columns[1].trim()), // Decode special characters
+            authors: decodeEntities(columns[1].trim()),
             title: decodeEntities(columns[2].trim()),
             focus_cat: decodeEntities(columns[3].trim()),
             medical_cat: decodeEntities(columns[4].trim()),
             outcome_cat: decodeEntities(columns[5].trim()),
             doi_link: columns[6].trim(),
+            camp_type: decodeEntities(columns[7]?.trim() || ""),
+            method: decodeEntities(columns[8]?.trim() || ""),
+            participant_details: decodeEntities(columns[9]?.trim() || ""),
+            outcome1: decodeEntities(columns[10]?.trim() || ""),
+            outcome2: decodeEntities(columns[11]?.trim() || ""),
+            outcome3: decodeEntities(columns[12]?.trim() || ""),
+            outcome4: decodeEntities(columns[13]?.trim() || ""),
+            outcome5: decodeEntities(columns[14]?.trim() || ""),
           };
         })
         .filter((item) => item !== null);
@@ -240,14 +248,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Track expanded card index globally within this render
     let expandedIdx = null;
-
-    // Check if any card is currently expanded (preserve on re-render)
     const prevExpanded = document.querySelector('.database-card.card-expanded');
     if (prevExpanded) {
       expandedIdx = parseInt(prevExpanded.getAttribute('data-card-idx'), 10);
     }
 
-    // Build all card elements and keep references for reordering
     const cardElements = filteredData.map((item, idx) => {
       let doiURL = item.doi_link.trim();
       let hasDOI =
@@ -257,31 +262,21 @@ document.addEventListener("DOMContentLoaded", function () {
       card.className = "database-card";
       card.setAttribute("data-card-idx", idx);
 
-      // Accessibility: Make card focusable and act as a button if clickable
       card.setAttribute("tabindex", "0");
       card.setAttribute("role", "button");
       card.setAttribute("aria-label", `Access paper: ${item.title}`);
 
-      // Restore expanded state if needed
       if (expandedIdx === idx) {
         card.classList.add("card-expanded");
       }
 
-      // Card expand/collapse logic
       card.addEventListener("click", function (e) {
-        // If the click originated from the .doi-flag, do not expand/collapse
         if (e.target.classList.contains("doi-flag")) return;
-
-        // Remove .card-expanded from all cards
         document.querySelectorAll(".database-card.card-expanded").forEach((el) => {
           if (el !== card) el.classList.remove("card-expanded");
         });
-
-        // Toggle this card
         const isExpanding = !card.classList.contains("card-expanded");
         card.classList.toggle("card-expanded");
-
-        // Re-render to handle edge case if expanding
         if (isExpanding) {
           displayCardsWithExpanded(idx);
         }
@@ -322,16 +317,48 @@ document.addEventListener("DOMContentLoaded", function () {
       // Remove only the first and last double quotes if they exist
       let cleanTitle = item.title.replace(/^"(.*)"$/, "$1");
 
+      // Expanded details (only visible when card-expanded)
+      let expandedDetails = `
+        <div class="expanded-details" style="display:none;">
+          ${item.camp_type ? `<div><strong>Camp Type:</strong> ${item.camp_type}</div>` : ""}
+          ${item.method ? `<div><strong>Method:</strong> ${item.method}</div>` : ""}
+          ${item.participant_details ? `<div><strong>Participant Details:</strong> ${item.participant_details}</div>` : ""}
+          ${(item.outcome1 || item.outcome2 || item.outcome3 || item.outcome4 || item.outcome5) ? `
+            <div><strong>Outcomes:</strong>
+              <ul>
+                ${item.outcome1 ? `<li>${item.outcome1}</li>` : ""}
+                ${item.outcome2 ? `<li>${item.outcome2}</li>` : ""}
+                ${item.outcome3 ? `<li>${item.outcome3}</li>` : ""}
+                ${item.outcome4 ? `<li>${item.outcome4}</li>` : ""}
+                ${item.outcome5 ? `<li>${item.outcome5}</li>` : ""}
+              </ul>
+            </div>
+          ` : ""}
+        </div>
+      `;
+
       card.innerHTML = `
             <div class="card-header">
                 <div><p class="authors-year">${item.authors}, ${item.year}</p></div>
                 ${hasDOI ? `<div class="doi-flag" tabindex="0" role="button" aria-label="Open paper in new tab">Access Paper</div>` : ""}
             </div>
             <div class="card-title">${cleanTitle}</div>
-            ${tagSectionHTML} <!-- Only added if any tags exist -->
+            ${tagSectionHTML}
+            ${expandedDetails}
         `;
 
-      // Add click and keyboard handler for .doi-flag
+      // Show/hide expanded details based on card-expanded class
+      const showHideExpanded = () => {
+        const details = card.querySelector('.expanded-details');
+        if (details) {
+          details.style.display = card.classList.contains('card-expanded') ? 'block' : 'none';
+        }
+      };
+      card.addEventListener('transitionend', showHideExpanded);
+      // Also trigger on initial render
+      showHideExpanded();
+
+      // DOI flag logic
       if (hasDOI) {
         const doiFlag = card.querySelector('.doi-flag');
         if (doiFlag) {
