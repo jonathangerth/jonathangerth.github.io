@@ -354,7 +354,12 @@ document.addEventListener("DOMContentLoaded", function () {
           details.style.display = card.classList.contains('card-expanded') ? 'block' : 'none';
         }
       };
-      card.addEventListener('transitionend', showHideExpanded);
+      // Show/hide immediately on click, not on transitionend
+      card.addEventListener('click', function (e) {
+        // ...existing code for .doi-flag and expand/collapse...
+        // After toggling .card-expanded, update details immediately:
+        showHideExpanded();
+      });
       // Also trigger on initial render
       showHideExpanded();
 
