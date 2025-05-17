@@ -450,9 +450,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // If an expanded card exists, use edge-case logic
-    if (expandedIdx !== null && expandedIdx !== undefined) {
+    if (expandedIdx !== null && expandedIdx !== undefined && document.querySelector('.database-card.card-expanded')) {
       displayCardsWithExpanded(expandedIdx);
     } else {
+      // Always restore original order when no card is expanded
       cardElements.forEach(card => fragment.appendChild(card));
       container.appendChild(fragment);
     }
