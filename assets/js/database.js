@@ -317,7 +317,6 @@ document.addEventListener("DOMContentLoaded", function () {
       let cleanTitle = item.title.replace(/^"(.*)"$/, "$1");
 
       // --- Card Details Section: Use same tag section format for details ---
-      // Helper for single-value fields (context, method, participants)
       const createDetailTagSection = (heading, value) => {
         if (!value || value.trim() === "" || value.trim() === "-") return "";
         return `
@@ -327,7 +326,6 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
         `;
       };
-      // Helper for findings (multiple)
       const createDetailFindingsSection = (heading, ...findings) => {
         const validFindings = findings.filter(f => f && f.trim() && f.trim() !== "-");
         if (validFindings.length === 0) return "";
@@ -353,16 +351,25 @@ document.addEventListener("DOMContentLoaded", function () {
         item.finding5
       );
 
-      let expandedDetails = `
-        <div class="expanded-details" style="display:none;">
-          <div class="card-tags">
-            ${detailContext}
-            ${detailMethod}
-            ${detailParticipants}
-            ${detailFindings}
+      // Only show expandedDetails if at least one detail exists
+      let expandedDetails = "";
+      if (
+        detailContext ||
+        detailMethod ||
+        detailParticipants ||
+        detailFindings
+      ) {
+        expandedDetails = `
+          <div class="expanded-details" style="display:none;">
+            <div class="card-tags">
+              ${detailContext}
+              ${detailMethod}
+              ${detailParticipants}
+              ${detailFindings}
+            </div>
           </div>
-        </div>
-      `;
+        `;
+      }
 
       card.innerHTML = `
             <div class="card-header">
@@ -384,7 +391,6 @@ document.addEventListener("DOMContentLoaded", function () {
       // Show/hide immediately on click, not on transitionend
       card.addEventListener('click', function (e) {
         // ...existing code for .doi-flag and expand/collapse...
-        // After toggling .card-expanded, update details immediately:
         showHideExpanded();
       });
       // Also trigger on initial render
