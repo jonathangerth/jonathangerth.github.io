@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Database and filter logic
   let database = [];
   let filters = {
     focus_cat: [],
@@ -283,46 +284,52 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // Reset filters logic (single listener)
   document.getElementById("reset-filters").addEventListener("click", () => {
+    // Uncheck all checkboxes
     document
       .querySelectorAll(".filter-options input[type='checkbox']")
       .forEach((checkbox) => {
         checkbox.checked = false;
       });
+
+    // Reset dropdowns if applicable
+    document.querySelectorAll(".filter-options select").forEach((select) => {
+      select.selectedIndex = 0; // Reset to first option
+    });
+
     filters = { focus_cat: [], medical_cat: [], outcome_cat: [] };
     displayCards();
     updateFilterCounts(); // Reset filter counts
   });
 
-  // Initialize
-  loadDatabase();
-});
-
-document.addEventListener("DOMContentLoaded", function () {
+  // Header toggle logic
   let toggle = document.querySelector(".header-toggle");
   let header = document.querySelector(".header");
-
-  toggle.addEventListener("click", function () {
-    header.classList.toggle("header-show");
-    document.body.classList.toggle("menu-open"); // Push content when open
-  });
-});
-
-document.getElementById("reset-filters").addEventListener("click", () => {
-  // Uncheck all checkboxes
-  document
-    .querySelectorAll(".filter-options input[type='checkbox']")
-    .forEach((checkbox) => {
-      checkbox.checked = false;
+  if (toggle && header) {
+    toggle.addEventListener("click", function () {
+      header.classList.toggle("header-show");
+      document.body.classList.toggle("menu-open"); // Push content when open
     });
+  }
 
-  // Reset dropdowns if applicable
-  document.querySelectorAll(".filter-options select").forEach((select) => {
-    select.selectedIndex = 0; // Reset to first option
-  });
+  // Filter section toggle logic
+  const toggleButton = document.getElementById("toggle-filters");
+  const filtersSection = document.querySelector(".filters");
+  if (toggleButton && filtersSection) {
+    toggleButton.addEventListener("click", function () {
+      const isCollapsed = filtersSection.classList.toggle("collapsed");
+      // Toggle the button text and icon
+      if (isCollapsed) {
+        toggleButton.innerHTML = '<i id="arrow-icon" class="bi bi-arrow-down"></i> Show Filters';
+      } else {
+        toggleButton.innerHTML = '<i id="arrow-icon" class="bi bi-arrow-up"></i> Hide Filters';
+      }
+    });
+  }
 
-  // Trigger filtering logic again (if applicable)
-  applyFilters(); // Ensure this function updates the displayed data
+  // Initialize database loading
+  loadDatabase();
 });
 
 function decodeEntities(encodedString) {
@@ -330,20 +337,5 @@ function decodeEntities(encodedString) {
   textarea.innerHTML = encodedString;
   return textarea.value;
 }
-document.addEventListener("DOMContentLoaded", function () {
-  const toggleButton = document.getElementById("toggle-filters");
-  const filtersSection = document.querySelector(".filters");
-
-  toggleButton.addEventListener("click", function () {
-    const isCollapsed = filtersSection.classList.toggle("collapsed");
-
-    // Toggle the button text and icon
-    if (isCollapsed) {
-      toggleButton.innerHTML = '<i id="arrow-icon" class="bi bi-arrow-down"></i> Show Filters';
-    } else {
-      toggleButton.innerHTML = '<i id="arrow-icon" class="bi bi-arrow-up"></i> Hide Filters';
-    }
-  });
-});
 
 
