@@ -238,7 +238,17 @@ document.addEventListener("DOMContentLoaded", function () {
     // Use DocumentFragment for efficient DOM updates
     const fragment = document.createDocumentFragment();
 
-    filteredData.forEach((item, idx) => {
+    // Track expanded card index globally within this render
+    let expandedIdx = null;
+
+    // Check if any card is currently expanded (preserve on re-render)
+    const prevExpanded = document.querySelector('.database-card.card-expanded');
+    if (prevExpanded) {
+      expandedIdx = parseInt(prevExpanded.getAttribute('data-card-idx'), 10);
+    }
+
+    // Build all card elements and keep references for reordering
+    const cardElements = filteredData.map((item, idx) => {
       let doiURL = item.doi_link.trim();
       let hasDOI =
         doiURL !== "" && doiURL !== "-" && /^https?:\/\//.test(doiURL);
@@ -252,14 +262,29 @@ document.addEventListener("DOMContentLoaded", function () {
       card.setAttribute("role", "button");
       card.setAttribute("aria-label", `Access paper: ${item.title}`);
 
+      // Restore expanded state if needed
+      if (expandedIdx === idx) {
+        card.classList.add("card-expanded");
+      }
+
       // Card expand/collapse logic
       card.addEventListener("click", function (e) {
         // If the click originated from the .doi-flag, do not expand/collapse
         if (e.target.classList.contains("doi-flag")) return;
+
+        // Remove .card-expanded from all cards
         document.querySelectorAll(".database-card.card-expanded").forEach((el) => {
           if (el !== card) el.classList.remove("card-expanded");
         });
+
+        // Toggle this card
+        const isExpanding = !card.classList.contains("card-expanded");
         card.classList.toggle("card-expanded");
+
+        // Re-render to handle edge case if expanding
+        if (isExpanding) {
+          displayCardsWithExpanded(idx);
+        }
       });
       card.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -297,7 +322,6 @@ document.addEventListener("DOMContentLoaded", function () {
       // Remove only the first and last double quotes if they exist
       let cleanTitle = item.title.replace(/^"(.*)"$/, "$1");
 
-      // Build card inner HTML, but add a placeholder for .doi-flag if present
       card.innerHTML = `
             <div class="card-header">
                 <div><p class="authors-year">${item.authors}, ${item.year}</p></div>
@@ -324,10 +348,49 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
 
-      fragment.appendChild(card);
+      return card;
     });
 
-    container.appendChild(fragment);
+    // Helper: re-render with expanded card and edge-case handling
+    function displayCardsWithExpanded(expandedIdx) {
+      container.innerHTML = "";
+      const cardsPerRow = getCardsPerRow();
+      // If expanded card is in the first row and not the first card,
+      // move all cards before it to after it
+      if (expandedIdx < cardsPerRow && expandedIdx > 0) {
+        // Cards before expanded
+        const before = cardElements.slice(0, expandedIdx);
+        // Expanded card
+        const expanded = cardElements[expandedIdx];
+        // Cards after expanded
+        const after = cardElements.slice(expandedIdx + 1);
+        // Order: expanded, before, after
+        container.appendChild(expanded);
+        before.forEach(card => container.appendChild(card));
+        after.forEach(card => container.appendChild(card));
+      } else {
+        // Default order
+        cardElements.forEach(card => container.appendChild(card));
+      }
+    }
+
+    // Helper: get number of cards per row based on grid settings and container width
+    function getCardsPerRow() {
+      // Match min width in grid-template-columns (250px)
+      const minCardWidth = 250;
+      const gap = 24; // 1.5rem gap
+      const containerWidth = container.clientWidth || window.innerWidth;
+      // Estimate how many cards fit per row
+      return Math.max(1, Math.floor((containerWidth + gap) / (minCardWidth + gap)));
+    }
+
+    // If an expanded card exists, use edge-case logic
+    if (expandedIdx !== null && expandedIdx !== undefined) {
+      displayCardsWithExpanded(expandedIdx);
+    } else {
+      cardElements.forEach(card => fragment.appendChild(card));
+      container.appendChild(fragment);
+    }
   }
 
   // Reset filters logic (single listener)
