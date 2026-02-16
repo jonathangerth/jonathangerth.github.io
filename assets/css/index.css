@@ -1,0 +1,472 @@
+
+
+
+/*--------------------------------------------------------------
+# Hero Section
+--------------------------------------------------------------*/
+
+
+.hero .background-container img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  /* Place image behind everything */
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, var(--hero-overlay-start), var(--hero-overlay-end));
+  /* Gradient overlay */
+  z-index: 2;
+  /* Overlay above the image */
+}
+
+.hero .container {
+  position: relative;
+  z-index: 3;
+  /* Ensure content is on top of the overlay */
+  color: var(--contrast-color);
+  /* Optional: Ensure text is readable */
+  display: flex;
+  flex-wrap: wrap;
+  /* Allow items to wrap on smaller screens */
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  /* Add spacing between elements */
+  text-align: center;
+  left: 50px;
+}
+
+.hero .headshot-container {
+  flex: 0 0 auto;
+  /* Ensure the headshot does not grow or shrink */
+  max-width: 250px;
+  /* Limit the width of the headshot */
+  text-align: center;
+}
+
+.hero .headshot-container img {
+  width: 100%;
+  /* Ensure the image scales within its container */
+  height: auto;
+  border: 8px solid color-mix(in srgb, var(--default-color), transparent 85%);
+  object-fit: cover;
+  border-radius: 50%;
+  /* Make it circular if needed */
+  border: 8px solid color-mix(in srgb, var(--contrast-color), transparent 85%);
+
+}
+
+.hero .text-container {
+  flex: 1;
+  /* Allow the text to take up the remaining space */
+  text-align: left;
+}
+
+.hero h2 {
+  margin: 0;
+  font-size: 48px;
+  /* Adjust font size */
+  font-weight: 700;
+}
+
+.hero p {
+  margin: 10px 0 0 0;
+  font-size: 20px;
+  /* Adjust font size */
+}
+
+.hero p span {
+  letter-spacing: 1px;
+  border-bottom: 2px solid var(--accent-color);
+}
+
+.emphasize {
+  color: var(--contrast-color);
+  font-family: inherit;
+  font-weight: lighter;
+}
+@media (max-width: 1200px) {
+  .hero {
+    flex-direction: column;
+    /* Stack items vertically */
+    text-align: center;
+  }
+
+  .hero .headshot-container {
+    max-width: 150px;
+    /* Adjust headshot size on smaller screens */
+    margin-bottom: 15px;
+  }
+    .hero .container {
+      left: 0px;
+    }
+
+  .hero h2 {
+    font-size: 28px;
+    /* Adjust for smaller screens */
+  }
+
+  .hero p {
+    font-size: 18px;
+    /* Adjust for smaller screens */
+  }
+}
+
+/*--------------------------------------------------------------
+# About Section
+--------------------------------------------------------------*/
+
+.about .content h2 {
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.about-container {
+  padding-bottom: 10px;
+}
+
+.about-list {
+  padding-left: 40px;
+  font-size: smaller;
+}
+
+.about .content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.about .content ul li {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.about .content ul strong {
+  margin-right: 10px;
+}
+
+.about .content ul i {
+  font-size: 16px;
+  margin-right: 5px;
+  color: var(--accent-color);
+  line-height: 0;
+}
+
+/*--------------------------------------------------------------
+# Topics Section
+--------------------------------------------------------------*/
+
+#research-topics {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;  
+  gap: 8px;                 
+}
+
+.topic-tile {
+  background-color: color-mix(in srgb, var(--surface-color) 80%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent-color) 100%, transparent);
+  color: var(--accent-color);
+  border-radius: 8px;   
+  padding: 4pt;             
+  display: inline-flex;   
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;     
+  line-height: 1.1;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Optional hover polish */
+.topic-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px color-mix(in srgb, var(--default-color), transparent 90%);
+}
+
+/*--------------------------------------------------------------
+# PROJECTS Section
+--------------------------------------------------------------*/
+
+.projects .container-tiles-featured {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+  padding-bottom: 10px;
+
+}
+
+.projects .container-tiles-other {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+  padding-bottom: 10px;
+
+}
+
+.project-tile {
+  background-color: var(--surface-color);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border-radius: 8px;
+  padding: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  align-content: start;
+}
+
+.project-tile:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--default-color), transparent 90%);
+}
+
+.project-tile .icon {
+  color: var(--accent-color);
+  font-size: 2rem;
+  margin-right: 15px;
+}
+
+.project-tile .title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.project-tile .description {
+  font-size: .7rem;
+  line-height: 1.15;
+  text-align: left;
+  font-weight: 150px;
+  color: color-mix(in srgb, var(--default-color), transparent 35%);
+  padding-bottom: 10px;
+}
+
+.project-tile .role,
+.project-tile .principles {
+  font-size: 0.8rem;
+  font-weight: 200px;
+  color: var(--default-color);
+  text-align: right;
+  margin: 0;
+  padding: 0;
+}
+
+.project-tile .tile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.project-tile .tile-header .icon {
+  color: var(--accent-color);
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.project-tile .tile-header .tile-link-container {
+  flex-shrink: 0;
+}
+
+.project-tile .tile-header .tile-link-container a {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--accent-color);
+  text-decoration: none;
+  border: 1px solid var(--accent-color);
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.project-tile .tile-header .tile-link-container a:hover {
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+}
+
+/*--------------------------------------------------------------
+# Technologies Section
+--------------------------------------------------------------*/
+
+.technologies .container-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.technologies .technologies-content {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 300px;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border-radius: 8px;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.technologies .technologies-content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--default-color), transparent 90%);
+}
+
+.technologies .tile-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.technologies .tile-header p {
+  margin: 5px 0 10px;
+  font-size: 0.6rem;
+  text-align: center;
+  color: var(--nav-color);
+}
+
+.technologies .tile-footer {
+  text-align: center;
+  width: 100%;
+}
+
+.technologies .tile-footer .tile-link {
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--accent-color);
+  border: 1px solid var(--accent-color);
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.technologies .tile-footer .tile-link:hover {
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 750px) {
+  .technologies .isotope-container {
+    grid-template-columns: 1fr;
+    /* One tile per row on smaller screens */
+  }
+
+  .technologies .technologies-content {
+    height: auto;
+    padding: 15px;
+  }
+}
+
+.custom-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: var(--surface-color);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-tile:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--default-color), transparent 90%);
+}
+
+.tile-header h4 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.tile-header p {
+  margin: 5px 0 10px;
+  font-size: 0.9rem;
+  text-align: center;
+  color: var(--nav-color);
+}
+
+.tile-body {
+  margin: 10px 0;
+}
+
+.tile-icon {
+  color: var(--accent-color);
+}
+
+.tile-footer .tile-link {
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--accent-color);
+  border: 1px solid var(--accent-color);
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.tile-footer .tile-link:hover {
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+}
+
+/*--------------------------------------------------------------
+# Featured Publications Section
+--------------------------------------------------------------*/
+
+.pubs-list .tile-link {
+  display: inline-flex; 
+  align-items: center;
+  gap: 4px; 
+  text-decoration: none;
+  font-size: 0.5rem;
+  font-weight: 500;
+  color: var(--accent-color);
+  border: 1px solid var(--accent-color);
+  padding: 4px 8px; 
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-left: 5px; 
+  white-space: nowrap; 
+}
+
+.pubs-list .tile-link:hover {
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+}
+
+.pubs-list .tile-link i {
+  font-size: 0.6rem;
+}
+.pubs-list p {
+  margin: 0; 
+  padding-left: 20px; 
+  text-indent: -20px; 
+  font-size: smaller; 
+  line-height: 1.5; 
+  position: relative;
+}
+
+.pubs-list p a {
+  display: inline-block; 
+  margin-left: 10px; 
+  text-indent: 0; 
+  vertical-align: middle; 
+}
+

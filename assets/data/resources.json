@@ -1,0 +1,14 @@
+{
+  "page-title": "Open-Access Resources",
+  "page-subtitle": "Tools, guides, and live demos",
+  "publications": [
+    {
+      "title": "Medical Specialty Camp Systematic Review Database",
+      "meta": "",
+      "description": "An interactive, open-source, filteable database of research conducted at/with medical-specialty summer camp settings.",
+      "embed": "https://morganavickery.github.io/medical-specialty-camp-systematic-review/",
+      "iframeHeight": 200,
+      "link": "https://morganavickery.github.io/medical-specialty-camp-systematic-review/"
+    }
+  ]
+}

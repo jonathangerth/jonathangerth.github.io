@@ -1,0 +1,230 @@
+/* Navigation Menu Link Styling */
+.navmenu a {
+  font-family: var(--nav-font);
+  font-weight: 700;
+}
+
+/*--------------------------------------------------------------
+# Global navigation
+--------------------------------------------------------------*/
+.navigation {
+  color: var(--contrast-color);
+  background-color: var(--nav-bg-color, var(--dark-accent));
+
+  position: fixed;
+  top: 0;
+  left: -300px;
+  bottom: 0;
+  padding: 0 15px;
+  width: 300px;
+  transition: left 0.3s, background-color 0.3s;
+  overflow-y: auto;
+  z-index: 1100;
+  border-right: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+}
+.sitename {
+  padding-bottom: 40px;
+}
+
+.navigation.navigation-show {
+  left: 0;
+}
+
+.navigation .profile-img img {
+  margin: 15px auto;
+  display: block;
+  width: 120px;
+  border: 8px solid color-mix(in srgb, var(--contrast-color), transparent 85%);
+}
+
+.navigation .logo {
+  line-height: 1;
+  margin-bottom: 15px;
+}
+
+.navigation .logo img {
+  max-height: 32px;
+  margin-right: 8px;
+}
+
+.navigation .logo h1 {
+  font-size: 18px;
+  margin: 0;
+  font-weight: 700;
+  color: var(--heading-color);
+}
+
+.navigation .social-links {
+  margin: 0 0 20px 0;
+}
+
+/* Divider scoped to navigation */
+.navigation hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  width: 60%;
+  margin: 0.5rem auto;
+}
+
+/*--------------------------------------------------------------
+# Social buttons (scoped to navigation)
+--------------------------------------------------------------*/
+
+.social-links {
+  padding: 10px
+}
+.navigation .social-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: var(--accent-color);
+  border-radius: 50%;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
+  margin: 2px 2px;
+  text-align: center;
+  color: var(--color-on-accent, var(--contrast-color));
+}
+
+.navigation .social-button:hover {
+  background-color: color-mix(in srgb, var(--accent-color), transparent 15%);
+  transform: scale(1.1);
+  color: var(--color-on-accent, var(--contrast-color));
+}
+
+.navigation .social-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+/*--------------------------------------------------------------
+# Navigation Toggle Button
+--------------------------------------------------------------*/
+.navigation .navigation-toggle {
+  color: var(--contrast-color);
+  background-color: var(--nav-toggle-bg-color, var(--accent-color));
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 9999;
+  transition: background-color 0.3s;
+}
+
+.navigation .navigation-toggle:hover {
+  background-color: color-mix(in srgb, var(--accent-color) 90%, white 15%);
+}
+
+/* Centered Site Name */
+.navigation .sitename {
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 10px 0;
+  width: 100%;
+  letter-spacing: 0.5px;
+}
+
+/*--------------------------------------------------------------
+# Navigation Menu
+--------------------------------------------------------------*/
+.navmenu {
+  padding: 0;
+  z-index: 9997;
+}
+
+.navmenu ul {
+  list-style: none;
+  padding: 0 0 20px 0;
+  margin: 0;
+}
+
+.navmenu a,
+.navmenu a:focus {
+  color: var(--nav-color);
+  padding: 15px 10px;
+  font-family: var(--nav-font);
+  font-size: 16px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  transition: color 0.3s;
+  width: 100%;
+}
+
+.navmenu a .navicon,
+.navmenu a:focus .navicon {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.navmenu a:hover,
+.navmenu .active,
+.navmenu .active:focus {
+  color: var(--nav-hover-color);
+}
+
+.navmenu a:hover .navicon,
+.navmenu .active .navicon,
+.navmenu .active:focus .navicon {
+  color: var(--accent-color);
+}
+
+/*--------------------------------------------------------------
+# Contact block (scoped to navigation)
+--------------------------------------------------------------*/
+.navigation .contact-container {
+  padding-top: 40px;
+  font-size: smaller;
+  text-align: center;
+}
+
+.navigation .contact-container em {
+  color: var(--nav-color);
+}
+
+/* Hide mobile nav toggle if not needed */
+.mobile-nav-toggle {
+  display: none;
+}
+
+/*--------------------------------------------------------------
+# Layout shift when nav is open on wide screens
+--------------------------------------------------------------*/
+@media (min-width: 800px) {
+  .navigation {
+    left: 0;
+  }
+
+  .navigation.navigation-show ~ main,
+  .navigation.navigation-show ~ #footer {
+    margin-left: 300px;
+    transition: margin-left 0.3s;
+  }
+
+  .navigation ~ main,
+  .navigation ~ #footer {
+    margin-left: 0;
+    transition: margin-left 0.3s;
+  }
+}
+
+/* Smooth transition always */
+.main,
+#footer {
+  transition: margin-left 0.3s;
+}

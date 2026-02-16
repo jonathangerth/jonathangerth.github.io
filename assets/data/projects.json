@@ -1,0 +1,67 @@
+{
+  "featured": [],
+  "other": [
+    {
+      "icon": "bi-flower3",
+      "title": "Dissertation Research with Camp Kan Du at Bradford Woods",
+      "description": "Camp Kan Du is a summer camp for children with profound intellectual and multiple disabilities that gives them a typical camp experience. I developed and conducted a program evaluation of the camp session for staff, parents, and campers.",
+      "role": {
+        "title": "Lead Researcher & Evaluator",
+        "details": "2024"
+      }
+    },
+    {
+      "icon": "bi-journal-bookmark",
+      "title": "StRIVE Project",
+      "description": "The STRIVE (Stress Reports in Variable Environments) project in the Jordan Lab at Indiana University focuses on the study of individuals’ experiences of stress. Here, I analyzed data related to individuals’ experiences of stress and disability status.",
+      "role": {
+        "title": "Graduate Research Assistant",
+        "details": "2024 - 2025"
+      },
+      "principles": {
+        "title": "PI",
+        "details": "Evan Jordan"
+      }
+    },
+    {
+      "icon": "bi-robot",
+      "title": "Therabot Project",
+      "description": "The Therabot project, hosted in the R-House Lab at Indiana University, conducts research on robots and their use as socially assistive tools to improve individuals’ health. I managed recruitment, data collection, and communication with study participants throughout the duration of the study.",
+      "role": {
+        "title": "Graduate Research Assistant",
+        "details": "2022"
+      },
+      "principles": {
+        "title": "Co-PIs",
+        "details": "Dr. Jenn Piatt and Dr. Selma Šabanović"
+      }
+    },
+    {
+      "icon": "bi-person-wheelchair",
+      "title": "Help at Home & Insights ViaQuest Community Solutions",
+      "description": "Through Help at Home and Insights Consulting, I worked as a direct support professional for three adults with disabilities.",
+      "role": {
+        "title": "Direct Support Professional",
+        "details": "2020 - 2025"
+      }
+    },
+    {
+      "icon": "bi-signpost-split",
+      "title": "Bradford Woods",
+      "description": "Bradford Woods is a medical specialty camp that provides services for youth with a variety of health conditions. I trained and supervised counselors in providing quality care for campers.",
+      "role": {
+        "title": "Cabin Head & Counselor",
+        "details": "Summers 2016 - 2019"
+      }
+    },
+    {
+      "icon": "bi-easel2",
+      "title": "Indiana University - Bloomington",
+      "description": "As an instructional assistant, I facilitated students’ development of semester capstone projects in a professional development seminar for students pursuing a Master of Public Health.",
+      "role": {
+        "title": "Graduate Instructional Assistant",
+        "details": "2022 - 2024"
+      }
+    }
+  ]
+}

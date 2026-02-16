@@ -1,0 +1,376 @@
+:root {
+  /* =========================
+     Fonts
+     ========================= */
+  --default-font: "Lato", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Raleway", sans-serif;
+  --nav-font: "Lato", sans-serif;
+
+  /* =========================
+     Theme colors (defaults; overridden by site-preferences.json)
+     ========================= */
+  /* Core surfaces & text */
+  --page-bg: #ffffff;               /* Body + section backgrounds */
+  --surface-color: #ffffff;         /* Cards/panels/tiles */
+  --surface-alt-color: #f8f9fa;     /* Alternate surface for contrast */
+  --text-color: #111111;            /* Body text */
+  --heading-color: #111111;         /* Headings/titles */
+  --text-muted-color: #6c757d;      /* Metadata/captions */
+  --text-subtle-color: #555555;     /* Descriptions/softer copy */
+  --border-color: #e0e0e0;          /* Dividers & tile borders */
+
+  /* Brand / accents */
+  --accent-color: #EF8A17;          /* Links, buttons, highlights */
+  --accent-contrast-color: #ffffff; /* Text/icons on accent */
+
+  /* Navigation */
+  --nav-text-color: #a8a9b4;
+  --nav-text-hover-color: #ffffff;
+  --nav-bg-color: #040b14;
+  --nav-toggle-bg-color: var(--accent-color);
+
+  /* Footer */
+  --footer-bg-color: var(--page-bg);
+
+  /* Badges */
+  --badge-bg: #3E1F47;
+
+  /* Hero overlay (two-stop gradient over hero image) */
+  --hero-overlay-start: rgba(239, 138, 23, 0.8);
+  --hero-overlay-end: rgba(143, 37, 12, 0.8);
+
+  /* Accent washes (soft tinted backgrounds for chips/tiles) */
+  --accent-wash-dark: color-mix(in srgb, var(--nav-bg-color) 20%, transparent);
+  --accent-wash-bright: color-mix(in srgb, var(--accent-color) 20%, transparent);
+
+  /* Section alternates */
+  --section-alt-bg-color: var(--accent-wash-dark);
+
+  /* Effects */
+  --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.1);
+
+  /* =========================
+     Legacy aliases (keep existing CSS working)
+     ========================= */
+  --background-color: var(--page-bg);
+  --color-bg: var(--page-bg);
+  --default-color: var(--text-color);
+  --color-text: var(--text-color);
+  --color-heading: var(--heading-color);
+  --color-text-muted: var(--text-muted-color);
+  --muted-text-color: var(--text-muted-color);
+  --soft-text-color: var(--text-subtle-color);
+  --color-text-subtle: var(--text-subtle-color);
+  --color-border: var(--border-color);
+  --color-surface: var(--surface-color);
+  --color-surface-2: var(--surface-alt-color);
+  --tile-bg: var(--surface-alt-color);
+  --bright-accent: var(--accent-color);
+  --dark-accent: var(--nav-bg-color);
+  --color-on-accent: var(--accent-contrast-color);
+  --contrast-color: var(--accent-contrast-color);
+  --nav-color: var(--nav-text-color);
+  --nav-hover-color: var(--nav-text-hover-color);
+  --nav-bg: var(--nav-bg-color);
+  --section-alt-bg: var(--section-alt-bg-color);
+
+  /* Global behavior */
+  scroll-behavior: smooth;
+}
+
+
+/*--------------------------------------------------------------
+# General Styling & Shared Classes
+--------------------------------------------------------------*/
+body {
+  color: var(--color-text);
+  background-color: var(--background-color);
+  font-family: var(--default-font);
+  
+}
+
+a {
+  color: var(--bright-accent);
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+a:hover {
+  color: color-mix(in srgb, var(--bright-accent), transparent 25%);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--heading-font);
+  font-weight: 600;
+}
+
+
+p,
+a,
+li,
+span {
+  font-family: var(--default-font);
+  font-weight: 400;
+}
+
+#page-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--contrast-color);
+}
+
+#page-subtitle {
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: var(--contrast-color);
+}
+
+/*--------------------------------------------------------------
+# Global Sections
+--------------------------------------------------------------*/
+.hero {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero.primary {
+  min-height: 50vh;
+  padding-left: 40px;
+}
+
+.hero.primary .background-container { display: block; }
+
+.hero.secondary {
+  width: 100%;
+  min-height: 20vh;
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+  padding: 24px 0;  
+}
+
+.hero.secondary .background-container { display: none; }
+
+.section {
+  color: var(--color-text);
+  background-color: var(--background-color);
+  padding: 40px 40px; 
+  overflow: clip;
+}
+
+.alt-section {
+  background-color: var(--section-alt-bg, var(--accent-wash-dark));
+}
+
+.section .content-container {
+  margin: 0 auto; 
+  max-width: 1200px;
+}
+
+
+/*--------------------------------------------------------------
+# Global Footer
+--------------------------------------------------------------*/
+
+.footer {
+  color: var(--color-text);
+  background-color: var(--footer-bg-color, var(--background-color));
+  font-size: 14px;
+  padding: 40px 0;
+  position: relative;
+  border-top: 1px solid color-mix(in srgb, var(--color-text), transparent 90%);
+}
+
+.footer .copyright p {
+  margin-bottom: 0;
+}
+
+.footer .credits {
+  margin-top: 4px;
+  font-size: 13px;
+  text-align: center;
+}
+
+/*--------------------------------------------------------------
+# Preloader
+--------------------------------------------------------------*/
+#preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  overflow: hidden;
+  background: var(--background-color);
+  transition: all 0.6s ease-out;
+}
+
+#preloader:before {
+  content: "";
+  position: fixed;
+  top: calc(50% - 30px);
+  left: calc(50% - 30px);
+  border: 6px solid var(--color-on-accent);
+  border-color: var(--bright-accent) transparent var(--bright-accent) transparent;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: animate-preloader 1.5s linear infinite;
+}
+
+@keyframes animate-preloader {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*--------------------------------------------------------------
+# Scroll Top Button
+--------------------------------------------------------------*/
+.scroll-top {
+  position: fixed;
+  visibility: hidden;
+  opacity: 0;
+  right: 15px;
+  bottom: -15px;
+  z-index: 99999;
+  background-color: var(--bright-accent);
+  width: 44px;
+  height: 44px;
+  border-radius: 50px;
+  transition: all 0.4s;
+}
+
+.scroll-top i {
+  font-size: 24px;
+  color: var(--color-on-accent);
+  line-height: 0;
+}
+
+.scroll-top:hover {
+  background-color: color-mix(in srgb, var(--bright-accent), transparent 20%);
+  color: var(--color-on-accent);
+}
+
+.scroll-top.active {
+  visibility: visible;
+  opacity: 1;
+  bottom: 15px;
+}
+
+/*--------------------------------------------------------------
+# Disable aos animation delay on mobile devices
+--------------------------------------------------------------*/
+@media screen and (max-width: 750px) {
+  [data-aos-delay] {
+    transition-delay: 0 !important;
+  }
+}
+
+
+
+/*--------------------------------------------------------------
+# Global Section Titles
+--------------------------------------------------------------*/
+.section-title {
+  position: relative;
+  text-align: center; /* Center-align titles for consistency */
+  padding: 20px;
+}
+
+.section-title h2 {
+  padding-bottom: 20px;
+  font-size: 28px;
+  font-weight: 700;
+  position: relative;
+}
+
+.section-title h2:after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: var(--bright-accent);
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+}
+
+.section-title p {
+  font-size: 16px; 
+  color: var(--nav-fg);
+}
+
+/*--------------------------------------------------------------
+# Responsive Adjustments for Sections
+--------------------------------------------------------------*/
+@media (max-width: 750px) {
+  .section {
+    padding: 30px 15px; /* Reduce padding for smaller screens */
+  }
+
+  .section-title h2 {
+    font-size: 24px; /* Adjust title size for smaller screens */
+  }
+
+  .section-title p {
+    font-size: 14px; /* Adjust subtitle size for smaller screens */
+  }
+
+  .section .content-container {
+    padding: 0 10px; /* Reduce padding for smaller screens */
+  }
+}
+
+.content-container p {
+  margin-bottom: 0;
+}
+
+
+/*--------------------------------------------------------------
+# Global Footer
+--------------------------------------------------------------*/
+
+.footer {
+  color: var(--contrast-color);
+  background-color: var(--dark-accent);
+  font-size: 12px;
+  padding: 20px;
+  position: relative;
+  border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  gap: 10px;
+  text-align: center;
+}
+
+.access-button {
+  display: inline-block;
+  font-weight: 500;
+  width: fit-content;
+  color: var(--contrast-color);
+  background-color: var(--accent-color);
+  padding: 10px 14px;
+  border-radius: 6px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+
+.access-button:hover,
+.access-button:focus-visible {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,.1);
+  color: var(--nav-color);
+  background-color: var(--mid2-teal);
+  cursor: pointer;
+}

@@ -1,0 +1,41 @@
+{
+  "sections": {
+    "mywork": "What do I research?",
+    "projects": "Professional Experiences",
+    "cv": "Curriculum Vitae",
+    "publications": "Publications & Presentations",
+    "resources": "Open-Access Resources"
+  },
+
+  "theme": {
+    "colors": {
+      "pageBg": "#ffffff",
+      "surface": "#ffffff",
+      "surfaceAlt": "#FBF8C5",
+
+      "textBody": "#111111",
+      "textHeading": "#111111",
+      "textMuted": "#6c757d",
+      "textSubtle": "#555555",
+
+      "accent": "#EF8A17",
+      "accentOn": "#ffffff",
+
+      "border": "#e0e0e0",
+      "badgeBg": "#8F250C",
+
+      "navText": "#ffffff",
+      "navTextHover": "#ffffff",
+      "navBg": "#8F250C",
+      "navToggleBg": "#8f250b",
+
+      "sectionAltBg": "#fce8d5",
+      "footerBg": "#8F250C",
+
+      "heroOverlayStart": "rgba(239, 138, 23, 0.8)",
+      "heroOverlayEnd": "rgba(143, 37, 12, 0.9)"
+    }
+  },
+
+  "analyticsId": ""
+}
