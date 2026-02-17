@@ -19,6 +19,10 @@
   ],
   "contacts": [
     {
+      "email": "jgerth.camp@gmail.com",
+      "type": "camp"
+    },
+     {
       "email": "jonathan.gerth@yahoo.com",
       "type": "personal"
     }
