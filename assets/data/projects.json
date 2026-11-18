@@ -2,6 +2,15 @@
   "featured": [],
   "other": [
     {
+      "icon": "bi-signpost-split",
+      "title": "Double H Ranch",
+      "description": "Double H Ranch is part of the SeriousFun Children's Network and provides camp progrmaming for children with serious illnesses. I provided support to campers through the camp experience.",
+      "role": {
+        "title": "Camper Support Manager",
+        "details": "2025 - 2026"
+      }
+    },
+    {
       "icon": "bi-flower3",
       "title": "Dissertation Research with Camp Kan Du at Bradford Woods",
       "description": "Camp Kan Du is a summer camp for children with profound intellectual and multiple disabilities that gives them a typical camp experience. I developed and conducted a program evaluation of the camp session for staff, parents, and campers.",
